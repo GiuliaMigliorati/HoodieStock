@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 
 import model.*;
-import view.Menu1;
+import view.ViewBenvenuto;
 
 
 public class MainDB {
@@ -24,7 +24,7 @@ public class MainDB {
 		SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Menu1();
+                new ViewBenvenuto();
             }
         });
 		

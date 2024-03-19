@@ -5,9 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Menu1 extends JFrame{
+public class ViewBenvenuto extends JFrame{
 	
-	public Menu1() {
+	public ViewBenvenuto() {
 		
 		// Imposta le proprietà del JFrame
         setTitle("SCHERMATA DI BENVENUTO");
@@ -50,7 +50,7 @@ public class Menu1 extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                Menu2 menu2 = new Menu2();
+                ViewMenu menu2 = new ViewMenu();
                 menu2.menu2();
             }
         });

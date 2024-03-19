@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class Menu2 extends JFrame {
+public class ViewMenu extends JFrame {
 	
 	public void menu2() {
 		
@@ -81,7 +81,7 @@ public class Menu2 extends JFrame {
         menuButton4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Menu3 menu3 = new Menu3();
+				ViewFiltro menu3 = new ViewFiltro();
 				menu3.menu3();
 			}  	
         });

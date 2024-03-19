@@ -1,6 +1,9 @@
 package view;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 public class Menu2 extends JFrame {
@@ -24,8 +27,8 @@ public class Menu2 extends JFrame {
 		// Aggiungi i pulsanti di scelta
 		JButton menuButton1 = new JButton("AGGIUNGI");
 		JButton menuButton2 = new JButton("ELIMINA");
-		JButton menuButton3 = new JButton("FILTRA");
-		JButton menuButton4 = new JButton("MODIFICA");
+		JButton menuButton3 = new JButton("MODIFICA");
+		JButton menuButton4 = new JButton("FILTRA");
 		JButton backButton = new JButton("TORNA");
 		
 		//Aggiungi i pulsanti al panello del menu
@@ -38,6 +41,50 @@ public class Menu2 extends JFrame {
 		mainPanel.add(menuPanel, BorderLayout.CENTER);
         add(mainPanel);
         setVisible(true);
+        
+        
+        // Aggiungi gestori di eventi ai pulsanti del menu
+        backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);				
+			}        	
+        });
+        
+        menuButton1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+        	
+        });
+        
+        menuButton2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+        	
+        });
+        
+        menuButton3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+        	
+        });
+        
+        menuButton4.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Menu3 menu3 = new Menu3();
+				menu3.menu3();
+			}  	
+        });
 		
 		
 		

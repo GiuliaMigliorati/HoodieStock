@@ -45,12 +45,11 @@ public class Menu1 extends JFrame{
         // Rendi il frame visibile
         setVisible(true);
         
-     // Reazione al click del tasto
+        // Reazione al click del tasto
         createMenuButton0.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Menu3 menu3 = new Menu3();
-                menu3.menu3();
+                
                 Menu2 menu2 = new Menu2();
                 menu2.menu2();
             }

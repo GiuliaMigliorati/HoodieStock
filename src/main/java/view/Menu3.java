@@ -18,7 +18,7 @@ public class Menu3 extends JFrame {
     public void menu3() {
     	
     	// Imposta le proprietà del JFrame
-        setTitle("SCHERMATA DI BENVENUTO");
+        setTitle("SCHERMO 3");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 500);
         setLocationRelativeTo(null);

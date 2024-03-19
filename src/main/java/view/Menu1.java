@@ -51,6 +51,8 @@ public class Menu1 extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 Menu3 menu3 = new Menu3();
                 menu3.menu3();
+                Menu2 menu2 = new Menu2();
+                menu2.menu2();
             }
         });
 	}

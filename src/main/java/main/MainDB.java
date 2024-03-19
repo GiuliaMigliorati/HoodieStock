@@ -9,13 +9,26 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.SwingUtilities;
+
 import model.*;
+import view.Menu1;
 
 
 public class MainDB {
 
 	public static void main(String[] args) throws SQLException {
-
+		
+		/*
+		// Avvio interfaccia utente
+		SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new Menu1();
+            }
+        });
+		*/
+		
 		//Creazione DB
 		final String DB_REL_FILE = "C:\\Users\\39346\\Desktop\\Prova db\\HoodieProva.db";
 		final String DB_URL = "jdbc:sqlite:" + DB_REL_FILE;

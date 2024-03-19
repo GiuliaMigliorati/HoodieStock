@@ -19,7 +19,7 @@ public class MainDB {
 
 	public static void main(String[] args) throws SQLException {
 		
-		/*
+		
 		// Avvio interfaccia utente
 		SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -27,7 +27,7 @@ public class MainDB {
                 new Menu1();
             }
         });
-		*/
+		
 		
 		//Creazione DB
 		final String DB_REL_FILE = "C:\\Users\\39346\\Desktop\\Prova db\\HoodieProva.db";

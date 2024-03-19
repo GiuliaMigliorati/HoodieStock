@@ -9,7 +9,7 @@ public class Menu1 extends JFrame{
 	
 	public Menu1() {
 		
-		// Imposta le proprietà del JFrame1
+		// Imposta le proprietà del JFrame
         setTitle("SCHERMATA DI BENVENUTO");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 500);
@@ -44,6 +44,17 @@ public class Menu1 extends JFrame{
 
         // Rendi il frame visibile
         setVisible(true);
+        
+     // Reazione al click del tasto
+        createMenuButton0.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Menu3 menu3 = new Menu3();
+                menu3.menu3();
+            }
+        });
 	}
+	
+	
 
 }

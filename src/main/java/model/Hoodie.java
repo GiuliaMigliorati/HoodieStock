@@ -2,7 +2,7 @@ package model;
 
 public class Hoodie {
 	
-	private String id; 
+	public String id; 
 	public String modello; 
 	public String taglia; 
 	public String colore;

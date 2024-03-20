@@ -145,6 +145,7 @@ public class ViewFiltro extends JFrame {
             public void actionPerformed(ActionEvent e) {
             	Hoodie felpa = new Hoodie();
             	felpa = getSelectedItems();
+            	
             	System.out.print(felpa.toString());
                  
             }			
@@ -228,8 +229,6 @@ public class ViewFiltro extends JFrame {
 				break;
 			}
 		}
-		
-		//System.out.println(felpa.toString());
 		return felpa;
 	}
 	

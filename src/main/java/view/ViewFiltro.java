@@ -7,9 +7,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+
+import model.*;
+
+
 
 public class ViewFiltro extends JFrame {
 
@@ -17,13 +24,12 @@ public class ViewFiltro extends JFrame {
     private ArrayList<JButton> group2Buttons;
     private ArrayList<JButton> group3Buttons;
     
-    
     public void menu3() {
     	
     	// Imposta le proprietà del JFrame
-        setTitle("SCHERMO 3");
+    	setTitle("SELEZIONA I FILTRI DESIDERATI");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 500);
+        setSize(800, 800);
         setLocationRelativeTo(null);
 
         // Crea ArrayList per categoria di tasti
@@ -37,44 +43,77 @@ public class ViewFiltro extends JFrame {
 
         // Crea un pannello per il menu di selezione
         JPanel menuPanel = new JPanel();
-        menuPanel.setLayout(new GridLayout(4, 1));
+        menuPanel.setLayout(new GridLayout(0, 1));
 
+        // Crea un Border per i titoli delle categorie
+        Border categoryBorder = BorderFactory.createLineBorder(Color.BLACK);
+
+        // Aggiungi il pannello per la prima categoria di pulsanti
+        JPanel group1Panel = new JPanel();
+        group1Panel.setLayout(new GridLayout(1, 0)); // Utilizza GridLayout con una singola riga per i pulsanti
+        group1Panel.setBorder(BorderFactory.createTitledBorder(categoryBorder, "Categoria: MODELLO"));
+
+        // Crea tasti di selezione per la prima categoria
+        JButton subMenuButton1 = new JButton("MODELLO A");
+        JButton subMenuButton2 = new JButton("MODELLO B");
+        JButton subMenuButton3 = new JButton("MODELLO C");
+
+        group1Panel.add(subMenuButton1);
+        group1Panel.add(subMenuButton2);
+        group1Panel.add(subMenuButton3);
+
+        // Aggiungi il pannello della prima categoria al pannello del menu
+        menuPanel.add(group1Panel);
+
+        // Aggiungi il pannello per la seconda categoria di pulsanti
+        JPanel group2Panel = new JPanel();
+        group2Panel.setLayout(new GridLayout(1, 0)); // Utilizza GridLayout con una singola riga per i pulsanti
+        group2Panel.setBorder(BorderFactory.createTitledBorder(categoryBorder, "Categoria: TAGLIA"));
+
+        // Crea e aggiungi i pulsanti per la seconda categoria
+        JButton subButton1 = new JButton("TAGLIA S");
+        JButton subButton2 = new JButton("TAGLIA M");
+        JButton subButton3 = new JButton("TAGLIA L");
+
+        group2Panel.add(subButton1);
+        group2Panel.add(subButton2);
+        group2Panel.add(subButton3);
+
+        // Aggiungi il pannello della seconda categoria al pannello del menu
+        menuPanel.add(group2Panel);
+
+        // Aggiungi il pannello per la terza categoria di pulsanti
+        JPanel group3Panel = new JPanel();
+        group3Panel.setLayout(new GridLayout(1, 0)); // Utilizza GridLayout con una singola riga per i pulsanti
+        group3Panel.setBorder(BorderFactory.createTitledBorder(categoryBorder, "Categoria: COLORE"));
+
+        // Crea e aggiungi i pulsanti per la terza categoria
+        JButton sub1 = new JButton("ROSSO");
+        JButton sub2 = new JButton("VERDE");
+        JButton sub3 = new JButton("GIALLO");
+
+        group3Panel.add(sub1);
+        group3Panel.add(sub2);
+        group3Panel.add(sub3);
         
-        // Crea tasti di selezione
-        JButton subMenuButton1 = new JButton("VERDE");
-        JButton subMenuButton2 = new JButton("ROSSO");
-        JButton subMenuButton3 = new JButton("GIALLO");        
-
-        JButton subButton1 = new JButton("S");
-        JButton subButton2 = new JButton("M");
-        JButton subButton3 = new JButton("L");        
-
-        JButton sub1 = new JButton("nike");
-        JButton sub2 = new JButton("adidas");
-        JButton sub3 = new JButton("puma");       
-
+     // Aggiungi il pannello della terza categoria al pannello del menu
+        menuPanel.add(group3Panel);
+        
+     // Aggiungi il pannello per la terza categoria di pulsanti
+        JPanel group4Panel = new JPanel();
+        group4Panel.setLayout(new GridLayout(1, 0)); // Utilizza GridLayout con una singola riga per i pulsanti
+        group4Panel.setBorder(BorderFactory.createTitledBorder(categoryBorder, "Categoria 4"));
+        
         JButton subMenuButton0 = new JButton("OK");
         JButton backButton = new JButton("Torna al Menu Principale");
         JButton clearButton = new JButton("CLEAR");
         
-        // Aggiungi i pulsanti al menu
-        menuPanel.add(subMenuButton1);
-        menuPanel.add(subMenuButton2);
-        menuPanel.add(subMenuButton3);        
+        group4Panel.add(subMenuButton0);
+        group4Panel.add(clearButton);
+        group4Panel.add(backButton);
         
-        menuPanel.add(subButton1);
-        menuPanel.add(subButton2);
-        menuPanel.add(subButton3);        
-        
-        menuPanel.add(sub1);
-        menuPanel.add(sub2);
-        menuPanel.add(sub3);        
-        
-        menuPanel.add(subMenuButton0);
-        menuPanel.add(clearButton);
-        menuPanel.add(backButton);
+        menuPanel.add(group4Panel);
 
-        
         mainPanel.add(menuPanel, BorderLayout.CENTER);
         add(mainPanel);
         setVisible(true);
@@ -104,7 +143,10 @@ public class ViewFiltro extends JFrame {
         subMenuButton0.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Voci selezionate: " + getSelectedItems());
+            	Hoodie felpa = new Hoodie();
+            	felpa = getSelectedItems();
+            	System.out.print(felpa.toString());
+                 
             }			
         });
         
@@ -166,28 +208,29 @@ public class ViewFiltro extends JFrame {
 
     
 	// Metodo per ottenere i filtri desiderati
-	private ArrayList <String> getSelectedItems() {
-		ArrayList<String> selectedItems = new ArrayList<>();
-
+	private Hoodie getSelectedItems() {
+		Hoodie felpa = new Hoodie();
 		for (JButton button : group1Buttons) {
 			if(button.getBackground() == Color.YELLOW) {
-				selectedItems.add(button.getText());
+				felpa.modello = button.getText();
 				break;
 			}
 		}
 		for (JButton button : group2Buttons) {
 			if(button.getBackground() == Color.YELLOW) {
-				selectedItems.add(button.getText());
+				felpa.taglia = button.getText();
 				break;
 			}
 		}
 		for (JButton button : group3Buttons) {
-			if(button.getBackground() == Color.YELLOW) {
-				selectedItems.add(button.getText());
+			if(button.getBackground() == Color.YELLOW) {				
+				felpa.colore = button.getText();
 				break;
 			}
 		}
-		return selectedItems;
+		
+		//System.out.println(felpa.toString());
+		return felpa;
 	}
 	
 	// Metodo per pulire i filtri scelti

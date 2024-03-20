@@ -3,9 +3,9 @@ package model;
 public class Hoodie {
 	
 	private String id; 
-	private String modello; 
-	private String taglia; 
-	private String colore;
+	public String modello; 
+	public String taglia; 
+	public String colore;
 	
 	public Hoodie(String id, String modello, String taglia, String colore) {
 		this.id = id;
@@ -52,7 +52,14 @@ public class Hoodie {
 
 	public void setColore(String colore) {
 		this.colore = colore;
+	}
+
+	@Override
+	public String toString() {
+		return "Hoodie [id=" + id + ", modello=" + modello + ", taglia=" + taglia + ", colore=" + colore + "]\n";
 	} 
+	
+	
 	
 	
 	

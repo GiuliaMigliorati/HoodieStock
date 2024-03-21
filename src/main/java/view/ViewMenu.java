@@ -55,6 +55,7 @@ public class ViewMenu extends JFrame {
         });
         
         menuButton1.addActionListener(new ActionListener() {
+        	//NECESSARIO CICLO DI CONTROLLO RGUARDANTE I CODICI DELLE FELPE
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Hoodie felpa = new Hoodie();
@@ -72,7 +73,8 @@ public class ViewMenu extends JFrame {
         menuButton2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				//NECESSARIO CICLO DI CONTROLLO RGUARDANTE I CODICI DELLE FELPE
+				// INSERIMENTO DI UN CODICE, CREAZIONE DELL'OGGETO FELPA CON QUEL CODICE
 				
 				
 			}
@@ -82,7 +84,10 @@ public class ViewMenu extends JFrame {
         menuButton3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				//NECESSARIO CICLO DI CONTROLLO RGUARDANTE I CODICI DELLE FELPE
+				//INSERIMENTO DI UN CODICE, STAMPA DELLA QUANTITà DI QUEL CODICE
+				//OPZ 1: L'UTENTE INSERISCE LA NUOVA QUANTITà E SI SOVRASCRIVE QUELLA VECCHIA
+				//OPZ 2: L'UTENTE INSERISCE DI QUANTO VUOLE MODIFICARE QUELLA QUANTITà (+ O -) CON I RELATIVI CONTROLLI
 				
 			}
         	

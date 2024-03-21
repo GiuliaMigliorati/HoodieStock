@@ -59,10 +59,12 @@ public class ViewMenu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Hoodie felpa = new Hoodie();
 				felpa = getNewHoodie();
-				System.out.println(felpa.toString());
-				
-				JOptionPane.showMessageDialog(ViewMenu.this, "FELPA INSERITA CON SUCCESSO");
-				
+				if(felpa != null) {
+					System.out.println(felpa.toString());
+					JOptionPane.showMessageDialog(ViewMenu.this, "FELPA INSERITA CON SUCCESSO");
+				} else {
+					JOptionPane.showMessageDialog(ViewMenu.this, "Operazione Annullata");
+				}				
 			}
         	
         });
@@ -108,9 +110,13 @@ public class ViewMenu extends JFrame {
 		String colore = "Inserisci la colore della tipologia di felpa da aggiungere:";
 		
         userInput = getNonEmptyInput(JOptionPane.showInputDialog(codice), codice);
+        if(userInput == null) return null;
         userInput1 = getNonEmptyInput(JOptionPane.showInputDialog(modello), modello);
+        if(userInput1 == null) return null;
         userInput2 = getNonEmptyInput(JOptionPane.showInputDialog(taglia), taglia);
+        if(userInput2 == null) return null;
         userInput3 = getNonEmptyInput(JOptionPane.showInputDialog(colore), colore);
+        if(userInput3 == null) return null;
 		
         felpa.id = userInput;
         felpa.modello = userInput1;
@@ -118,13 +124,15 @@ public class ViewMenu extends JFrame {
         felpa.colore = userInput3;
 		
 		return felpa;
-		
-		
+	
 	}
 
 	private String getNonEmptyInput(String message, String question) {
 	    String input = message;
-	    while (input == null || input.trim().isEmpty()) {
+	    if(input == null) {
+	    	return null;
+	    }
+	    while (input.trim().isEmpty()) {
 	        input = JOptionPane.showInputDialog("Inserimento non valido.\n" + question);
 	    }
 	    return input;

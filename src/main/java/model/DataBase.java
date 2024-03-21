@@ -53,43 +53,47 @@ public class DataBase {
 		}
 		
 	}
-	
-	
+
+
 	//Metodo per query sul database 
 	public static ArrayList <Hoodie> selectFromTabel(String DB_URL, String sql) throws SQLException {
-		
+
 		Connection conn = DriverManager.getConnection(DB_URL);
 		Statement stmt = conn.createStatement();
 		System.out.println("Risultati query:");
 		ResultSet resultSet = stmt.executeQuery(sql);
-		
-		ArrayList <String> listaHoodie = new ArrayList<String>(); 
-		ArrayList <Hoodie> hoodie = new ArrayList<Hoodie>(); 
-		
+
+		ArrayList <String> listaHoodie = new ArrayList<String>();
+		ArrayList <Hoodie> hoodie = new ArrayList<Hoodie>();
+
 		while (resultSet.next()) {
-			
+
 			for (int i = 1; i <= 4; i++) {
-				
-				listaHoodie.add(resultSet.getString(i)); 
+				//System.out.println(resultSet.getString(i) + " °°°°");
+
+				listaHoodie.add(resultSet.getString(i));
+
 			}
-			
-			Hoodie felpa = new Hoodie(); 
-			felpa.setId(listaHoodie.get(0)); 
-			felpa.setModello(listaHoodie.get(1)); 
-			felpa.setTaglia(listaHoodie.get(2)); 
-			felpa.setColore(listaHoodie.get(3)); 
-			
-			hoodie.add(felpa); 
-			
-			System.out.println();
 		}
+
+		for (int j = 0; j<listaHoodie.size(); j+=4) {
+
+			Hoodie felpa = new Hoodie();
+			felpa.setId(listaHoodie.get(j));
+			felpa.setModello(listaHoodie.get(j+1));
+			felpa.setTaglia(listaHoodie.get(j+2));
+			felpa.setColore(listaHoodie.get(j+3));
+
+			hoodie.add(felpa);
+
+
+		}
+
 		stmt.close();
 		conn.close();
 		System.out.println("query eseguita con successo");
-		
-		return hoodie; 
-		
-		//Fare metodi per eliminare oggetti da db
+
+		return hoodie;
 	}
 	
 	

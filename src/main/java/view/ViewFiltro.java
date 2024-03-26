@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -54,9 +55,12 @@ public class ViewFiltro extends JFrame {
         group1Panel.setBorder(BorderFactory.createTitledBorder(categoryBorder, "Categoria: MODELLO"));
 
         // Crea tasti di selezione per la prima categoria
-        JButton subMenuButton1 = new JButton("MODELLO A");
-        JButton subMenuButton2 = new JButton("MODELLO B");
-        JButton subMenuButton3 = new JButton("MODELLO C");
+        JButton subMenuButton1 = new JButton("A");
+        subMenuButton1.setFont(subMenuButton1.getFont().deriveFont(Font.BOLD, 90f));
+        JButton subMenuButton2 = new JButton("B");
+        subMenuButton2.setFont(subMenuButton2.getFont().deriveFont(Font.BOLD, 90f));
+        JButton subMenuButton3 = new JButton("C");
+        subMenuButton3.setFont(subMenuButton3.getFont().deriveFont(Font.BOLD, 90f));
 
         group1Panel.add(subMenuButton1);
         group1Panel.add(subMenuButton2);
@@ -72,8 +76,11 @@ public class ViewFiltro extends JFrame {
 
         // Crea e aggiungi i pulsanti per la seconda categoria
         JButton subButton1 = new JButton("S");
+        subButton1.setFont(subButton1.getFont().deriveFont(Font.BOLD, 90f));
         JButton subButton2 = new JButton("M");
+        subButton2.setFont(subButton2.getFont().deriveFont(Font.BOLD, 90f));
         JButton subButton3 = new JButton("L");
+        subButton3.setFont(subButton3.getFont().deriveFont(Font.BOLD, 90f));
 
         group2Panel.add(subButton1);
         group2Panel.add(subButton2);
@@ -89,8 +96,11 @@ public class ViewFiltro extends JFrame {
 
         // Crea e aggiungi i pulsanti per la terza categoria
         JButton sub1 = new JButton("ROSSO");
-        JButton sub2 = new JButton("VERDE");
+        sub1.setFont(sub1.getFont().deriveFont(Font.BOLD, 50f));
+        JButton sub2 = new JButton("VERDE");        
+        sub2.setFont(sub2.getFont().deriveFont(Font.BOLD, 50f));
         JButton sub3 = new JButton("GIALLO");
+        sub3.setFont(sub3.getFont().deriveFont(Font.BOLD, 50f));
 
         group3Panel.add(sub1);
         group3Panel.add(sub2);
@@ -105,8 +115,10 @@ public class ViewFiltro extends JFrame {
         group4Panel.setBorder(BorderFactory.createTitledBorder(categoryBorder, "Categoria 4"));
         
         JButton subMenuButton0 = new JButton("OK");
+        subMenuButton0.setFont(subMenuButton0.getFont().deriveFont(Font.BOLD, 90f));
         JButton backButton = new JButton("Torna al Menu Principale");
         JButton clearButton = new JButton("CLEAR");
+        clearButton.setFont(clearButton.getFont().deriveFont(Font.BOLD, 60f));
         
         group4Panel.add(subMenuButton0);
         group4Panel.add(clearButton);
@@ -206,8 +218,8 @@ public class ViewFiltro extends JFrame {
         ArrayList<Hoodie> felpeCorrispondenti = new ArrayList<>(); //MODIFICARE CON L'ARRAY SELEZIONATO DAL DB
         // Supponiamo che il metodo getHoodies() restituisca un elenco di tutte le felpe disponibili
         //ArrayList<Hoodie> tutteLeFelpe = getHoodies();
-        Hoodie hoodie1 = new Hoodie("12","MODELLO A", "S", "ROSSO");
-        Hoodie hoodie2 = new Hoodie("1", "MODELLO A", "M", "VERDE");
+        Hoodie hoodie1 = new Hoodie("12","A", "S", "ROSSO");
+        Hoodie hoodie2 = new Hoodie("1", "A", "M", "VERDE");
         ArrayList<Hoodie> tutteLeFelpe = new ArrayList<>();
         tutteLeFelpe.add(hoodie2);
         tutteLeFelpe.add(hoodie1);

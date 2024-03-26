@@ -34,8 +34,9 @@ public class MainDB {
 		//final String DB_REL_FILE = "C:\\Users\\hp\\Desktop\\DB\\HoodieProva.db"; //MICHAEL
 		//final String DB_URL = "jdbc:sqlite:" + DB_REL_FILE;
 		final String DB_URL = "jdbc:sqlite:sample.db";
+		
 		// Elimina tutte le righe dalla tabella DESCRIZIONE
-		DataBase.deleteAllRows(DB_URL, "DESCRIZIONE");
+		//DataBase.deleteAllRows(DB_URL, "DESCRIZIONE");
 		
 		Connection conn = DriverManager.getConnection(DB_URL);
 		DatabaseMetaData meta = conn.getMetaData();
@@ -43,6 +44,9 @@ public class MainDB {
 		System.out.println("A new database has been created.");
 		
 		//System.out.println("il file esiste? " + new File(DB_REL_FILE).exists());
+		
+		// Elimina la vecchia tabella DESCRIZIONE se esiste
+        DataBase.dropTable(DB_URL, "DESCRIZIONE");
 		
 		
 		//Creazione tabella
@@ -53,11 +57,13 @@ public class MainDB {
 		
 		
 		//Inserzioni in db
-		Hoodie hoodie = new Hoodie ("1", "B", "L", "VERDE"); 
-		DataBase.insertInDB(DB_URL, hoodie);
+		Hoodie hoodie = new Hoodie ("2", "B", "L", "VERDE"); 
 		DataBase.insertInDB(DB_URL, hoodie);
 		
-		Hoodie hoodie2 = new Hoodie ("2", "C", "XL", "VERDE"); 
+		Hoodie hoodie3 = new Hoodie ("1", "A", "L", "VERDE"); 
+		DataBase.insertInDB(DB_URL, hoodie3);
+		
+		Hoodie hoodie2 = new Hoodie ("1", "C", "XL", "VERDE"); 
 		DataBase.insertInDB(DB_URL, hoodie2);
 		
 		
@@ -69,14 +75,9 @@ public class MainDB {
 		
 		
 		//Stampa per prova dell'arraylist
-		for(int i =0; i<listaHoodie.size(); i++ ) {
-			System.out.println(listaHoodie.get(i).getId()); 
-			System.out.println(listaHoodie.get(i).getModello()); 
-			System.out.println(listaHoodie.get(i).getTaglia()); 
-			System.out.println(listaHoodie.get(i).getColore()); 
+		for(Hoodie felpa : listaHoodie) {
+			System.out.println(felpa.toString());
 		}
-		
-		
 		
 		
 	}

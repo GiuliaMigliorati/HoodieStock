@@ -103,6 +103,14 @@ public class DataBase {
 	        stmt.executeUpdate(sql);
 	    }
 	}
+	
+	public static void dropTable(String dbUrl, String tableName) throws SQLException {
+	    try (Connection conn = DriverManager.getConnection(dbUrl);
+	         Statement stmt = conn.createStatement()) {
+	        String sql = "DROP TABLE IF EXISTS " + tableName;
+	        stmt.executeUpdate(sql);
+	    }
+	}
 
 	
 	

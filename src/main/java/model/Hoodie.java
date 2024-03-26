@@ -59,6 +59,20 @@ public class Hoodie {
 		return "Hoodie [id=" + id + ", modello=" + modello + ", taglia=" + taglia + ", colore=" + colore + "]\n";
 	} 
 	
+	public boolean matchesCriteria(Hoodie criteria) {
+		System.out.print("aaaaa" + criteria.toString());
+		System.out.print(this.getModello());
+		System.out.print(this.getTaglia());
+		
+		    
+		boolean modelloMatch = (criteria.modello == null) || this.modello.equals(criteria.modello);
+		boolean tagliaMatch = (criteria.taglia == null) || this.taglia.equals(criteria.taglia);
+		boolean coloreMatch = (criteria.colore == null) || this.colore.equals(criteria.colore);
+		    
+		return modelloMatch && tagliaMatch && coloreMatch;
+		
+	}
+	
 	
 	
 	

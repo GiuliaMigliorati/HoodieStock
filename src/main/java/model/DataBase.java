@@ -96,6 +96,15 @@ public class DataBase {
 		return hoodie;
 	}
 	
+	public static void deleteAllRows(String dbUrl, String tableName) throws SQLException {
+	    try (Connection conn = DriverManager.getConnection(dbUrl);
+	         Statement stmt = conn.createStatement()) {
+	        String sql = "DELETE FROM " + tableName;
+	        stmt.executeUpdate(sql);
+	    }
+	}
+
+	
 	
 
 }

@@ -71,9 +71,9 @@ public class ViewFiltro extends JFrame {
         group2Panel.setBorder(BorderFactory.createTitledBorder(categoryBorder, "Categoria: TAGLIA"));
 
         // Crea e aggiungi i pulsanti per la seconda categoria
-        JButton subButton1 = new JButton("TAGLIA S");
-        JButton subButton2 = new JButton("TAGLIA M");
-        JButton subButton3 = new JButton("TAGLIA L");
+        JButton subButton1 = new JButton("S");
+        JButton subButton2 = new JButton("M");
+        JButton subButton3 = new JButton("L");
 
         group2Panel.add(subButton1);
         group2Panel.add(subButton2);
@@ -147,7 +147,18 @@ public class ViewFiltro extends JFrame {
             	felpa = getSelectedItems();
             	
             	System.out.print(felpa.toString());
-                 
+            	
+            	ArrayList <Hoodie> felpeCorrispondenti = getMatchingHoodies(felpa);
+            	
+            	if(felpeCorrispondenti.isEmpty()) {
+            		JOptionPane.showMessageDialog(null, "Nessuna felpa trovata", "Ricerca senza risultati", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                	StringBuilder message = new StringBuilder("Felpe corrispondenti:\n");
+                	for(Hoodie hoodie : felpeCorrispondenti) {
+                		message.append(hoodie.toString()).append("\n");                		
+                	}
+                    JOptionPane.showMessageDialog(null, message.toString(), "Risultati della ricerca", JOptionPane.PLAIN_MESSAGE);         
+                }                
             }			
         });
         
@@ -190,7 +201,34 @@ public class ViewFiltro extends JFrame {
     }
 
     
-    // Metodo per azionare la selezione dei filtri
+    // Metodo per ottenere le felpe corrispondenti ai criteri selezionati
+    private ArrayList<Hoodie> getMatchingHoodies(Hoodie criteria) {
+        ArrayList<Hoodie> felpeCorrispondenti = new ArrayList<>(); //MODIFICARE CON L'ARRAY SELEZIONATO DAL DB
+        // Supponiamo che il metodo getHoodies() restituisca un elenco di tutte le felpe disponibili
+        //ArrayList<Hoodie> tutteLeFelpe = getHoodies();
+        Hoodie hoodie1 = new Hoodie("12","MODELLO A", "S", "ROSSO");
+        Hoodie hoodie2 = new Hoodie("1", "MODELLO A", "M", "VERDE");
+        ArrayList<Hoodie> tutteLeFelpe = new ArrayList<>();
+        tutteLeFelpe.add(hoodie2);
+        tutteLeFelpe.add(hoodie1);
+        //System.out.print(criteria.toString());
+        for(Hoodie felp : tutteLeFelpe) {
+        	System.out.print(felp.toString());
+        }
+        
+        for (Hoodie felpa : tutteLeFelpe) {
+            if (felpa.matchesCriteria(criteria)) {
+                felpeCorrispondenti.add(felpa);
+            }
+        }
+        for(Hoodie felp : felpeCorrispondenti) {
+        	System.out.print(felp.toString());
+        }
+        return felpeCorrispondenti;
+    }
+
+
+	// Metodo per azionare la selezione dei filtri
     private void toggleSelection(ArrayList<JButton> buttonGroup, JButton clickedButton) {
 		if(buttonGroup.contains(clickedButton)) {
 			for(JButton button : buttonGroup) {
@@ -244,4 +282,6 @@ public class ViewFiltro extends JFrame {
 			button.setBackground(null);
 		}
 	}
+	
+	
 }

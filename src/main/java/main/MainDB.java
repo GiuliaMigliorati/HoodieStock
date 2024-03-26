@@ -30,15 +30,19 @@ public class MainDB {
 		
 		
 		//Creazione DB
-		final String DB_REL_FILE = "C:\\Users\\39346\\Desktop\\Prova db\\HoodieProva.db";
-		final String DB_URL = "jdbc:sqlite:" + DB_REL_FILE;
+		//final String DB_REL_FILE = "C:\\Users\\39346\\Desktop\\Prova db\\HoodieProva.db"; // GIULIA
+		//final String DB_REL_FILE = "C:\\Users\\hp\\Desktop\\DB\\HoodieProva.db"; //MICHAEL
+		//final String DB_URL = "jdbc:sqlite:" + DB_REL_FILE;
+		final String DB_URL = "jdbc:sqlite:sample.db";
+		// Elimina tutte le righe dalla tabella DESCRIZIONE
+		DataBase.deleteAllRows(DB_URL, "DESCRIZIONE");
 		
 		Connection conn = DriverManager.getConnection(DB_URL);
 		DatabaseMetaData meta = conn.getMetaData();
 		System.out.println("The driver name is " + meta.getDriverName());
 		System.out.println("A new database has been created.");
 		
-		System.out.println("il file esiste? " + new File(DB_REL_FILE).exists());
+		//System.out.println("il file esiste? " + new File(DB_REL_FILE).exists());
 		
 		
 		//Creazione tabella

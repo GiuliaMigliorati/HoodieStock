@@ -2,18 +2,26 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.Border;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.*;
+
 
 import model.*;
 
@@ -165,11 +173,36 @@ public class ViewFiltro extends JFrame {
             	if(felpeCorrispondenti.isEmpty()) {
             		JOptionPane.showMessageDialog(null, "Nessuna felpa trovata", "Ricerca senza risultati", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                	StringBuilder message = new StringBuilder("Felpe corrispondenti:\n");
-                	for(Hoodie hoodie : felpeCorrispondenti) {
-                		message.append(hoodie.toString()).append("\n");                		
-                	}
-                    JOptionPane.showMessageDialog(null, message.toString(), "Risultati della ricerca", JOptionPane.PLAIN_MESSAGE);         
+                	// Ordina la lista di felpe in base all'ID numerico crescente
+                    Collections.sort(felpeCorrispondenti, new Comparator<Hoodie>() {
+                        @Override
+                        public int compare(Hoodie h1, Hoodie h2) {
+                            int id1 = Integer.parseInt(h1.getId());
+                            int id2 = Integer.parseInt(h2.getId());
+                            return id1 - id2;
+                        }
+                    });
+                	
+                	// Creare un array di oggetti bidimensionale per i dati della tabella
+                    Object[][] data = new Object[felpeCorrispondenti.size()][4];
+                    for (int i = 0; i < felpeCorrispondenti.size(); i++) {
+                        Hoodie hoodie = felpeCorrispondenti.get(i);
+                        data[i][0] = hoodie.getId();
+                        data[i][1] = hoodie.getModello();
+                        data[i][2] = hoodie.getTaglia();
+                        data[i][3] = hoodie.getColore();
+                    }
+                    
+                    String[] columnNames = {"ID", "MODELLO", "TAGLIA", "COLORE"};
+                    DefaultTableModel model = new DefaultTableModel(data, columnNames);
+                    JTable table = new JTable(model);
+                    
+                    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+                    centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+                    table.setDefaultRenderer(Object.class, centerRenderer);   
+                    table.setPreferredScrollableViewportSize(new Dimension(400, 400));
+                    table.setFont(new Font("Arial", Font.PLAIN, 17));
+                    JOptionPane.showMessageDialog(null, new JScrollPane(table), "Risultati della ricerca", JOptionPane.PLAIN_MESSAGE);
                 }                
             }			
         });
@@ -218,11 +251,19 @@ public class ViewFiltro extends JFrame {
         ArrayList<Hoodie> felpeCorrispondenti = new ArrayList<>(); //MODIFICARE CON L'ARRAY SELEZIONATO DAL DB
         // Supponiamo che il metodo getHoodies() restituisca un elenco di tutte le felpe disponibili
         //ArrayList<Hoodie> tutteLeFelpe = getHoodies();
-        Hoodie hoodie1 = new Hoodie("12","A", "S", "ROSSO");
-        Hoodie hoodie2 = new Hoodie("1", "A", "M", "VERDE");
+        Hoodie hoodie = new Hoodie ("2", "B", "L", "VERDE"); 
+		Hoodie hoodie2 = new Hoodie ("1", "A", "L", "VERDE"); 
+		Hoodie hoodie3 = new Hoodie ("10", "C", "M", "GIALLO"); 
+		Hoodie hoodie4 = new Hoodie ("12", "B", "S", "VERDE"); 
+		Hoodie hoodie5 = new Hoodie ("1", "A", "L", "VERDE"); 
+		Hoodie hoodie6 = new Hoodie ("4", "C", "L", "ROSSO"); 
         ArrayList<Hoodie> tutteLeFelpe = new ArrayList<>();
         tutteLeFelpe.add(hoodie2);
-        tutteLeFelpe.add(hoodie1);
+        tutteLeFelpe.add(hoodie);
+        tutteLeFelpe.add(hoodie3);
+        tutteLeFelpe.add(hoodie4);
+        tutteLeFelpe.add(hoodie5);
+        tutteLeFelpe.add(hoodie6);
         //System.out.print(criteria.toString());
         for(Hoodie felp : tutteLeFelpe) {
         	System.out.print(felp.toString());

@@ -35,9 +35,9 @@ public class ViewMenu extends JFrame {
 		menuButton2.setFont(menuButton2.getFont().deriveFont(Font.BOLD, 90f));
         menuButton2.setBackground(Color.WHITE); 
 		JButton menuButton3 = new JButton("MODIFICA");
-		menuButton3.setFont(menuButton3.getFont().deriveFont(Font.BOLD, 90f));
+		menuButton3.setFont(menuButton3.getFont().deriveFont(Font.ITALIC, 90f));
 		JButton menuButton4 = new JButton("FILTRA");
-		menuButton4.setFont(menuButton4.getFont().deriveFont(Font.BOLD, 90f));
+		menuButton4.setFont(menuButton4.getFont().deriveFont(Font.PLAIN, 90f));
 		JButton backButton = new JButton("TORNA");
 		backButton.setFont(backButton.getFont().deriveFont(Font.BOLD, 90f));
 		

@@ -58,18 +58,22 @@ public class MainDB {
 		
 		//Inserzioni in db
 		Hoodie hoodie = new Hoodie ("2", "B", "L", "VERDE"); 
-		DataBase.insertInDB(DB_URL, hoodie);
-		
-		Hoodie hoodie3 = new Hoodie ("1", "A", "L", "VERDE"); 
-		DataBase.insertInDB(DB_URL, hoodie3);
-		
-		Hoodie hoodie2 = new Hoodie ("1", "C", "XL", "VERDE"); 
-		DataBase.insertInDB(DB_URL, hoodie2);
+		DataBase.insertInDB(DB_URL, hoodie);		
+		Hoodie hoodie2 = new Hoodie ("1", "A", "L", "VERDE"); 
+		DataBase.insertInDB(DB_URL, hoodie2);		
+		Hoodie hoodie3 = new Hoodie ("10", "C", "M", "GIALLO"); 
+		DataBase.insertInDB(DB_URL, hoodie3);		
+		Hoodie hoodie4 = new Hoodie ("12", "B", "S", "VERDE"); 
+		DataBase.insertInDB(DB_URL, hoodie4);		
+		Hoodie hoodie5 = new Hoodie ("1", "A", "L", "VERDE"); 
+		DataBase.insertInDB(DB_URL, hoodie5);		
+		Hoodie hoodie6 = new Hoodie ("4", "C", "L", "ROSSO"); 
+		DataBase.insertInDB(DB_URL, hoodie6);
 		
 		
 		
 		//Select da tabella che restituisce ArrayList di oggetti Hoodie
-		String sql4 = "SELECT * FROM DESCRIZIONE WHERE ID = 2";
+		String sql4 = "SELECT * FROM DESCRIZIONE WHERE ID = 1";
 		ArrayList <Hoodie> listaHoodie = new ArrayList<Hoodie>();
 		listaHoodie = DataBase.selectFromTabel(DB_URL, sql4);
 		

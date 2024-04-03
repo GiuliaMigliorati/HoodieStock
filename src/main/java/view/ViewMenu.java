@@ -153,25 +153,51 @@ public class ViewMenu extends JFrame {
 		
 		String userInput, userInput1, userInput2, userInput3;
 		String codice = "Inserisci il codice della tipologia di felpa da aggiungere:";
-		String modello = "Inserisci il modello della tipologia di felpa da aggiungere:"; 
-		String taglia = "Inserisci la taglia della tipologia di felpa da aggiungere:";
-		String colore = "Inserisci la colore della tipologia di felpa da aggiungere:";
+		String modello = "Inserisci il modello della tipologia di felpa da aggiungere.\nMODELLI POSSIBILI: A - B - C"; 
+		String taglia = "Inserisci la taglia della tipologia di felpa da aggiungere.\nTAGLIE POSSIBILI: S - M - L";
+		String colore = "Inserisci la colore della tipologia di felpa da aggiungere.\nCOLORI POSSIBILI: ROSSO - VERDE - GIALLO";
 		
+		// Verifica l'input del codice ID
 		do {
 	        userInput = getNonEmptyNumericInput(JOptionPane.showInputDialog(codice), codice);
 	        if(userInput == null) return null;
 	        
-	        // Verifica se userInput è presente nell'array codici
+	        
 	        if (containsStringIgnoreCase(codici, userInput)) {
 	            JOptionPane.showMessageDialog(null, "Il codice inserito è già presente.");
 	        }
 	    } while (containsStringIgnoreCase(codici, userInput));
-        userInput1 = getNonEmptyInput(JOptionPane.showInputDialog(modello), modello);
-        if(userInput1 == null) return null;
-        userInput2 = getNonEmptyInput(JOptionPane.showInputDialog(taglia), taglia);
-        if(userInput2 == null) return null;
-        userInput3 = getNonEmptyInput(JOptionPane.showInputDialog(colore), colore);
-        if(userInput3 == null) return null;
+		// Verifica l'input del modello
+		do {
+		    userInput1 = getNonEmptyInput(JOptionPane.showInputDialog(modello), modello);
+		    if(userInput1 == null) return null;
+		    
+		    if(!userInput1.equals("A") && !userInput1.equals("B") && !userInput1.equals("C")) {
+		        JOptionPane.showMessageDialog(null, "Il modello inserito non esiste.");
+		    }
+		} while(!userInput1.equals("A") && !userInput1.equals("B") && !userInput1.equals("C"));
+		
+		// Verifica l'input della taglia
+		do {
+			userInput2 = getNonEmptyInput(JOptionPane.showInputDialog(taglia), taglia);
+	        if(userInput2 == null) return null;
+				    
+	        if(!userInput2.equals("M") && !userInput2.equals("S") && !userInput2.equals("L")) {
+				 JOptionPane.showMessageDialog(null, "La taglia inserita non esiste.");
+				    }
+		} while(!userInput2.equals("M") && !userInput2.equals("S") && !userInput2.equals("L"));
+        
+		// Verifica l'input del colore
+		do {
+			userInput3 = getNonEmptyInput(JOptionPane.showInputDialog(colore), colore);
+	        if(userInput3 == null) return null;
+						    
+			if(!userInput3.equals("ROSSO") && !userInput3.equals("VERDE") && !userInput3.equals("GIALLO")) {
+				 JOptionPane.showMessageDialog(null, "Il colore inserito non può essere accettato.");
+						    }
+		} while(!userInput3.equals("ROSSO") && !userInput3.equals("VERDE") && !userInput3.equals("GIALLO"));
+        
+        
 		
         felpa.id = userInput;
         felpa.modello = userInput1;

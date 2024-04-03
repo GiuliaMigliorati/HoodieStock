@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Hoodie {
 	
 	public String id; 
@@ -73,7 +75,18 @@ public class Hoodie {
 		
 	}
 	
-	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hoodie hoodie = (Hoodie) o;
+        return Objects.equals(id, hoodie.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 	
 	
 	

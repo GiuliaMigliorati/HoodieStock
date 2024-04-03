@@ -10,6 +10,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -169,38 +174,69 @@ public class ViewFiltro extends JFrame {
             	System.out.print(felpa.toString());
             	
             	ArrayList <Hoodie> felpeCorrispondenti = getMatchingHoodies(felpa);
-            	
             	if(felpeCorrispondenti.isEmpty()) {
             		JOptionPane.showMessageDialog(null, "Nessuna felpa trovata", "Ricerca senza risultati", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                	// Ordina la lista di felpe in base all'ID numerico crescente
-                    Collections.sort(felpeCorrispondenti, new Comparator<Hoodie>() {
-                        @Override
-                        public int compare(Hoodie h1, Hoodie h2) {
-                            int id1 = Integer.parseInt(h1.getId());
-                            int id2 = Integer.parseInt(h2.getId());
-                            return id1 - id2;
-                        }
-                    });
-                	
+                } else {                	
+
+                	// Ordinare la lista in base all'ID numerico crescente
+                	Collections.sort(felpeCorrispondenti, new Comparator<Hoodie>() {
+                	    @Override
+                	    public int compare(Hoodie h1, Hoodie h2) {
+                	        int id1 = Integer.parseInt(h1.getId());
+                	        int id2 = Integer.parseInt(h2.getId());
+                	        return id1 - id2;
+                	    }
+                	});
+
                 	// Creare un array di oggetti bidimensionale per i dati della tabella
-                    Object[][] data = new Object[felpeCorrispondenti.size()][4];
-                    for (int i = 0; i < felpeCorrispondenti.size(); i++) {
-                        Hoodie hoodie = felpeCorrispondenti.get(i);
-                        data[i][0] = hoodie.getId();
-                        data[i][1] = hoodie.getModello();
-                        data[i][2] = hoodie.getTaglia();
-                        data[i][3] = hoodie.getColore();
-                    }
-                    
-                    String[] columnNames = {"ID", "MODELLO", "TAGLIA", "COLORE"};
-                    DefaultTableModel model = new DefaultTableModel(data, columnNames);
-                    JTable table = new JTable(model);
-                    
+                	Object[][] data = new Object[felpeCorrispondenti.size()][5]; // Aggiunta della quinta colonna
+
+                	// Utilizzare una mappa per tenere traccia del numero di occorrenze di ciascuna felpa
+                	Map<Hoodie, Integer> hoodieOccurrences = new HashMap<>();
+                	
+                	// Riempire i dati della tabella e contare le occorrenze contemporaneamente
+                	// Creare un set per tenere traccia degli ID già inseriti
+                	Set<String> existingIds = new HashSet<>();
+                	List<Object[]> rowDataList = new ArrayList<>();
+                	for (Hoodie hoodie : felpeCorrispondenti) {
+                	    // Aggiorna la mappa delle occorrenze
+                	    hoodieOccurrences.put(hoodie, hoodieOccurrences.getOrDefault(hoodie, 0) + 1);
+                	    
+                	    // Controlla se l'ID della felpa è già presente
+                	    if (!existingIds.contains(hoodie.getId())) {
+                	        // L'ID non è presente, quindi aggiungi la riga
+                	        Object[] rowData = new Object[5];
+                	        rowData[0] = hoodie.getId();
+                	        rowData[1] = hoodie.getModello();
+                	        rowData[2] = hoodie.getTaglia();
+                	        rowData[3] = hoodie.getColore();
+                	        rowDataList.add(rowData);
+                	        existingIds.add(hoodie.getId()); // Aggiungi l'ID all'insieme degli ID già inseriti
+                	    }
+                	}
+
+                	// Riempire la colonna delle occorrenze nella tabella
+                	for (Object[] rowData : rowDataList) {
+                	    String id = (String)rowData[0];
+                	    Hoodie hoodie = felpeCorrispondenti.stream().filter(h -> h.getId().equals(id)).findFirst().orElse(null);
+                	    int occurrences = hoodieOccurrences.get(hoodie);
+                	    rowData[4] = occurrences;
+                	}
+
+                	// Convertire rowDataList in un array bidimensionale
+                	Object[][] data1 = new Object[rowDataList.size()][5];
+                	for (int i = 0; i < rowDataList.size(); i++) {
+                	    data1[i] = rowDataList.get(i);
+                	}
+
+                	String[] columnNames = {"ID", "MODELLO", "TAGLIA", "COLORE", "QUANTITÀ"};
+                	DefaultTableModel model = new DefaultTableModel(data1, columnNames);
+                	JTable table = new JTable(model);
+               
                     DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
                     centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
                     table.setDefaultRenderer(Object.class, centerRenderer);   
-                    table.setPreferredScrollableViewportSize(new Dimension(400, 400));
+                    table.setPreferredScrollableViewportSize(new Dimension(320, 300));
                     table.setFont(new Font("Arial", Font.PLAIN, 17));
                     JOptionPane.showMessageDialog(null, new JScrollPane(table), "Risultati della ricerca", JOptionPane.PLAIN_MESSAGE);
                 }                
@@ -256,7 +292,9 @@ public class ViewFiltro extends JFrame {
 		Hoodie hoodie3 = new Hoodie ("10", "C", "M", "GIALLO"); 
 		Hoodie hoodie4 = new Hoodie ("12", "B", "S", "VERDE"); 
 		Hoodie hoodie5 = new Hoodie ("1", "A", "L", "VERDE"); 
-		Hoodie hoodie6 = new Hoodie ("4", "C", "L", "ROSSO"); 
+		Hoodie hoodie6 = new Hoodie ("4", "C", "L", "ROSSO");
+		Hoodie hoodie7 = new Hoodie ("1", "A", "L", "VERDE"); 
+		Hoodie hoodie8 = new Hoodie ("4", "C", "L", "ROSSO");
         ArrayList<Hoodie> tutteLeFelpe = new ArrayList<>();
         tutteLeFelpe.add(hoodie2);
         tutteLeFelpe.add(hoodie);
@@ -264,6 +302,8 @@ public class ViewFiltro extends JFrame {
         tutteLeFelpe.add(hoodie4);
         tutteLeFelpe.add(hoodie5);
         tutteLeFelpe.add(hoodie6);
+        tutteLeFelpe.add(hoodie7);
+        tutteLeFelpe.add(hoodie8);
         //System.out.print(criteria.toString());
         for(Hoodie felp : tutteLeFelpe) {
         	System.out.print(felp.toString());

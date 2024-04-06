@@ -3,9 +3,11 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.*;
-
+import java.util.ArrayList;
+import model.DataBase;
 import model.Hoodie;
 
 
@@ -64,12 +66,23 @@ public class ViewMenu extends JFrame {
         menuButton1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String[] codici = {"0", "1", "10", "12"}; // SOSTITUIRE CON L'ARRAY DI CODICI DEL DB !!!!!!!!
-				
+				ArrayList <String> codici = new ArrayList <String>(); 
+				ArrayList <Hoodie> felpeDB = new ArrayList <Hoodie>(); 
+				String sql = "SELECT * FROM DESCRIZIONE";
+				try {
+					felpeDB = DataBase.selectFromTabel(sql);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				for(Hoodie felpa : felpeDB) {
+					codici.add(felpa.getId());
+				}
 				Hoodie felpa = new Hoodie();
 				felpa = getNewHoodie(codici);
 				if(felpa != null) {
 					System.out.println(felpa.toString());
+					DataBase.insertInDB(felpa);
 					JOptionPane.showMessageDialog(ViewMenu.this, "FELPA INSERITA CON SUCCESSO");
 				} else {
 					JOptionPane.showMessageDialog(ViewMenu.this, "Operazione Annullata");
@@ -81,7 +94,19 @@ public class ViewMenu extends JFrame {
         menuButton2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String[] codici = {"0", "1", "10", "12"}; // SOSTITUIRE CON L'ARRAY DI CODICI DEL DB !!!!!!!!
+				ArrayList <String> codici = new ArrayList<String>() ; 
+				ArrayList <Hoodie> felpeDB = new ArrayList <Hoodie>(); 
+				String sql = "SELECT * FROM DESCRIZIONE";
+				try {
+					felpeDB = DataBase.selectFromTabel(sql);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				for(Hoodie felpa : felpeDB) {
+					codici.add(felpa.getId());
+				}
+				
 				
 				Hoodie felpa = new Hoodie();
 				
@@ -102,7 +127,7 @@ public class ViewMenu extends JFrame {
 				//OPZ 1: L'UTENTE INSERISCE LA NUOVA QUANTITà E SI SOVRASCRIVE QUELLA VECCHIA
 				//OPZ 2: L'UTENTE INSERISCE DI QUANTO VUOLE MODIFICARE QUELLA QUANTITà (+ O -) CON I RELATIVI CONTROLLI
 				
-				String[] codici = {"0", "1", "10", "12"}; // SOSTITUIRE CON L'ARRAY DI CODICI DEL DB !!!!!!!!
+				ArrayList<String> codici = new ArrayList<>(); // SOSTITUIRE CON L'ARRAY DI CODICI DEL DB !!!!!!!!
 				
 				Hoodie felpa = new Hoodie();
 				
@@ -127,7 +152,7 @@ public class ViewMenu extends JFrame {
 		
 	}
 
-	protected Hoodie getHoodieStocked(String codice, String[] codici) {
+	protected Hoodie getHoodieStocked(String codice, ArrayList<String> codici) {
 		String userInput = null;
 		Hoodie felpa = new Hoodie();
 		do {
@@ -148,7 +173,7 @@ public class ViewMenu extends JFrame {
 	
 	
 
-	protected Hoodie getNewHoodie(String[] codici) {
+	protected Hoodie getNewHoodie(ArrayList<String> codici) {
 		Hoodie felpa = new Hoodie();
 		
 		String userInput, userInput1, userInput2, userInput3;
@@ -238,8 +263,8 @@ public class ViewMenu extends JFrame {
 	    return input;
 	}
 
-	private boolean containsStringIgnoreCase(String[] array, String target) {
-	    for (String s : array) {
+	private boolean containsStringIgnoreCase(ArrayList<String> codici, String target) {
+	    for (String s : codici) {
 	        if (s.equalsIgnoreCase(target)) {
 	            return true;
 	        }

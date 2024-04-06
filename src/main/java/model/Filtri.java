@@ -2,27 +2,43 @@ package model;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 //Da controllare: va bene aver inserito il DB_URL in maniera statica o andrebbe
 //fatto dinamicamente?
 
 
 public class Filtri {
+	
+	public static boolean matchesCriteria(Hoodie hoodie, Hoodie criteria) {
+        boolean modelloMatch = (criteria.getModello() == null) || hoodie.getModello().equals(criteria.getModello());
+        boolean tagliaMatch = (criteria.getTaglia() == null) || hoodie.getTaglia().equals(criteria.getTaglia());
+        boolean coloreMatch = (criteria.getColore() == null) || hoodie.getColore().equals(criteria.getColore());
+        
+        return modelloMatch && tagliaMatch && coloreMatch;
+    }
 
-    //Metodo che cerca hoodie specifica nel db
+    public static boolean equals(Hoodie hoodie1, Hoodie hoodie2) {
+        return Objects.equals(hoodie1.getId(), hoodie2.getId());
+    }
+
+    /*//Metodo che cerca hoodie specifica nel db
     public static ArrayList <Hoodie> filtra (Hoodie hoodie) throws SQLException{
 
         //ArrayList con tutto DB
-        final String DB_REL_FILE = "C:\\Users\\39346\\Desktop\\Prova db\\HoodieProva.db";
-        final String DB_URL = "jdbc:sqlite:" + DB_REL_FILE;
+		final String DB_URL = "jdbc:sqlite:sample.db";
+
 
         String sql = "SELECT * FROM DESCRIZIONE";
 
-        ArrayList <Hoodie> risultati = DataBase.selectFromTabel(DB_URL, sql);
+        ArrayList <Hoodie> risultati = DataBase.selectFromTabel(sql);
 
         //Unione di tutti gli altri filtri per colonna
         ArrayList <Hoodie> filtrato = new ArrayList <Hoodie>();
+        
+        
         filtrato = Filtri.filtraColore(Filtri.filtraTaglia(Filtri.filtraModello(risultati, hoodie), hoodie), hoodie);
+       // filtrato = Filtri.filtraTaglia(Filtri.filtraModello(risultati, hoodie), hoodie);
 
         return filtrato;
     }
@@ -135,13 +151,16 @@ public class Filtri {
             }
 
 
-        }else { Hoodie hoodieVuota = new Hoodie(null, null, null, null);
-            risultatiColore.add(hoodieVuota);
+        }else {for (int b=0; b<risultati.size(); b++) {
+
+            risultatiColore.add(risultati.get(b));
         }
 
-        return risultatiColore;
+        for(int i = 0; i< risultati.size(); i++) {
+        	
+        }
     }
+        return risultatiColore;
 
-
+}*/
 }
-

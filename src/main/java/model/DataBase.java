@@ -33,8 +33,9 @@ public class DataBase {
 	
 	
 	//Metodo per insert nel database
-	public static void insertInDB(String DB_URL, Hoodie hoodie) {
-		
+	public static void insertInDB(Hoodie hoodie) {
+		final String DB_URL = "jdbc:sqlite:sample.db";
+
 		String sql = "INSERT INTO DESCRIZIONE VALUES (" + " \"" + hoodie.getId() +
 				"\"," + " \"" + hoodie.getModello() + "\"," + " \"" + hoodie.getTaglia() +
 				"\"," + " \"" + hoodie.getColore() + "\")" ; 
@@ -56,7 +57,8 @@ public class DataBase {
 
 
 	//Metodo per query sul database 
-	public static ArrayList <Hoodie> selectFromTabel(String DB_URL, String sql) throws SQLException {
+	public static ArrayList <Hoodie> selectFromTabel(String sql) throws SQLException {
+		final String DB_URL = "jdbc:sqlite:sample.db";
 
 		Connection conn = DriverManager.getConnection(DB_URL);
 		Statement stmt = conn.createStatement();

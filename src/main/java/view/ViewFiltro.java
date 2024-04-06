@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -169,10 +170,12 @@ public class ViewFiltro extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
             	Hoodie felpa = new Hoodie();
+            	
             	felpa = getSelectedItems();
             	
-            	System.out.print(felpa.toString());
             	
+            	System.out.print("AAAAAAAAAAA" +felpa.toString());
+            	 
             	ArrayList <Hoodie> felpeCorrispondenti = getMatchingHoodies(felpa);
             	if(felpeCorrispondenti.isEmpty()) {
             		JOptionPane.showMessageDialog(null, "Nessuna felpa trovata", "Ricerca senza risultati", JOptionPane.INFORMATION_MESSAGE);
@@ -229,6 +232,7 @@ public class ViewFiltro extends JFrame {
                 	    data1[i] = rowDataList.get(i);
                 	}
 
+
                 	String[] columnNames = {"ID", "MODELLO", "TAGLIA", "COLORE", "QUANTITÀ"};
                 	DefaultTableModel model = new DefaultTableModel(data1, columnNames);
                 	JTable table = new JTable(model);
@@ -284,38 +288,26 @@ public class ViewFiltro extends JFrame {
     
     // Metodo per ottenere le felpe corrispondenti ai criteri selezionati
     private ArrayList<Hoodie> getMatchingHoodies(Hoodie criteria) {
-        ArrayList<Hoodie> felpeCorrispondenti = new ArrayList<>(); //MODIFICARE CON L'ARRAY SELEZIONATO DAL DB
-        // Supponiamo che il metodo getHoodies() restituisca un elenco di tutte le felpe disponibili
-        //ArrayList<Hoodie> tutteLeFelpe = getHoodies();
-        Hoodie hoodie = new Hoodie ("2", "B", "L", "VERDE"); 
-		Hoodie hoodie2 = new Hoodie ("1", "A", "L", "VERDE"); 
-		Hoodie hoodie3 = new Hoodie ("10", "C", "M", "GIALLO"); 
-		Hoodie hoodie4 = new Hoodie ("12", "B", "S", "VERDE"); 
-		Hoodie hoodie5 = new Hoodie ("1", "A", "L", "VERDE"); 
-		Hoodie hoodie6 = new Hoodie ("4", "C", "L", "ROSSO");
-		Hoodie hoodie7 = new Hoodie ("1", "A", "L", "VERDE"); 
-		Hoodie hoodie8 = new Hoodie ("4", "C", "L", "ROSSO");
+        ArrayList<Hoodie> felpeCorrispondenti = new ArrayList<>(); 
+        
         ArrayList<Hoodie> tutteLeFelpe = new ArrayList<>();
-        tutteLeFelpe.add(hoodie2);
-        tutteLeFelpe.add(hoodie);
-        tutteLeFelpe.add(hoodie3);
-        tutteLeFelpe.add(hoodie4);
-        tutteLeFelpe.add(hoodie5);
-        tutteLeFelpe.add(hoodie6);
-        tutteLeFelpe.add(hoodie7);
-        tutteLeFelpe.add(hoodie8);
-        //System.out.print(criteria.toString());
-        for(Hoodie felp : tutteLeFelpe) {
-        	System.out.print(felp.toString());
-        }
+        String sql = "SELECT * FROM DESCRIZIONE";
+		try {
+			tutteLeFelpe = DataBase.selectFromTabel(sql);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+        
         
         for (Hoodie felpa : tutteLeFelpe) {
-            if (felpa.matchesCriteria(criteria)) {
+            if (Filtri.matchesCriteria(felpa, criteria)) {
                 felpeCorrispondenti.add(felpa);
             }
         }
         for(Hoodie felp : felpeCorrispondenti) {
-        	System.out.print(felp.toString());
+        	System.out.print("QQQQQQQQQ" +felp.toString());
         }
         return felpeCorrispondenti;
     }

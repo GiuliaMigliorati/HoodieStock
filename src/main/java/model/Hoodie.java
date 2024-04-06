@@ -61,7 +61,7 @@ public class Hoodie {
 		return "Hoodie [id=" + id + ", modello=" + modello + ", taglia=" + taglia + ", colore=" + colore + "]\n";
 	} 
 	
-	public boolean matchesCriteria(Hoodie criteria) {
+	/*public boolean matchesCriteria(Hoodie criteria) {
 		System.out.print("aaaaa" + criteria.toString());
 		System.out.print(this.getModello());
 		System.out.print(this.getTaglia());
@@ -82,7 +82,7 @@ public class Hoodie {
         Hoodie hoodie = (Hoodie) o;
         return Objects.equals(id, hoodie.id);
     }
-
+*/
     @Override
     public int hashCode() {
         return Objects.hash(id);

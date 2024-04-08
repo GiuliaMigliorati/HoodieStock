@@ -25,13 +25,13 @@ public class ViewBenvenuto extends JFrame{
         
         // Aggiungi un pulsante per creare un nuovo menu
         JButton createMenuButton0 = new JButton("<html><center>HOODIE<br>STOCK</center></html>");
-        createMenuButton0.setBackground(Color.WHITE); 
-        int red = 0; // Valore rosso (0-255)
-        int green = 0; // Valore verde (0-255)
-        int blue = 0; // Valore blu (0-255)
+        createMenuButton0.setForeground(Color.BLACK); 
+        int red = 240; // Valore rosso (0-255)
+        int green = 240; // Valore verde (0-255)
+        int blue = 240; // Valore blu (0-255)
         Color customColor = new Color(red, green, blue);
-        createMenuButton0.setForeground(customColor);
-        createMenuButton0.setFont(createMenuButton0.getFont().deriveFont(Font.BOLD, 140f));
+        createMenuButton0.setBackground(customColor);
+        createMenuButton0.setFont(createMenuButton0.getFont().deriveFont(Font.BOLD, 150f));
         
         // Aggiungi il pulsante al pannello del menu
         menuPanel.add(createMenuButton0);

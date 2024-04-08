@@ -20,9 +20,9 @@ public class ViewMenu extends JFrame {
 	public void menu2() {
 		
 		// Imposta le proprietà del JFrame
-		setTitle("SCHERMO 2");
+		setTitle("SCHERMATA DI SELEZIONE DEL MENU");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(700, 700);
+		setSize(900, 700);
 		setLocationRelativeTo(null);
 		
 		// Crea un panello principale
@@ -34,18 +34,16 @@ public class ViewMenu extends JFrame {
 		menuPanel.setLayout(new GridLayout(5,1));
 		
 		// Aggiungi i pulsanti di scelta
-		JButton menuButton1 = new JButton("AGGIUNGI");
-		menuButton1.setFont(menuButton1.getFont().deriveFont(Font.BOLD, 90f));
-        menuButton1.setBackground(Color.WHITE); 
-		JButton menuButton2 = new JButton("ELIMINA");
-		menuButton2.setFont(menuButton2.getFont().deriveFont(Font.BOLD, 90f));
-        menuButton2.setBackground(Color.WHITE); 
-		JButton menuButton3 = new JButton("MODIFICA");
-		menuButton3.setFont(menuButton3.getFont().deriveFont(Font.ITALIC, 90f));
-		JButton menuButton4 = new JButton("FILTRA");
-		menuButton4.setFont(menuButton4.getFont().deriveFont(Font.PLAIN, 90f));
-		JButton backButton = new JButton("TORNA");
-		backButton.setFont(backButton.getFont().deriveFont(Font.BOLD, 90f));
+		JButton menuButton1 = new JButton("AGGIUNGI FELPA");
+		menuButton1.setFont(menuButton1.getFont().deriveFont(Font.BOLD, 80f));
+		JButton menuButton2 = new JButton("ELIMINA FELPA");
+		menuButton2.setFont(menuButton2.getFont().deriveFont(Font.BOLD, 80f));
+		JButton menuButton3 = new JButton("MODIFICA QUANTITÀ");
+		menuButton3.setFont(menuButton3.getFont().deriveFont(Font.BOLD, 80f));
+		JButton menuButton4 = new JButton("FILTRA LE FELPE");
+		menuButton4.setFont(menuButton4.getFont().deriveFont(Font.BOLD, 80f));
+		JButton backButton = new JButton("TORNA INDIETRO");
+		backButton.setFont(backButton.getFont().deriveFont(Font.BOLD, 80f));
 		
 		//Aggiungi i pulsanti al panello del menu
 		menuPanel.add(menuButton1);

@@ -126,13 +126,14 @@ public class ViewFiltro extends JFrame {
      // Aggiungi il pannello per la terza categoria di pulsanti
         JPanel group4Panel = new JPanel();
         group4Panel.setLayout(new GridLayout(1, 0)); // Utilizza GridLayout con una singola riga per i pulsanti
-        group4Panel.setBorder(BorderFactory.createTitledBorder(categoryBorder, "Categoria 4"));
+        group4Panel.setBorder(BorderFactory.createTitledBorder(categoryBorder, ""));
         
         JButton subMenuButton0 = new JButton("OK");
         subMenuButton0.setFont(subMenuButton0.getFont().deriveFont(Font.BOLD, 90f));
-        JButton backButton = new JButton("Torna al Menu Principale");
-        JButton clearButton = new JButton("CLEAR");
-        clearButton.setFont(clearButton.getFont().deriveFont(Font.BOLD, 60f));
+        JButton backButton = new JButton("<html><center>TORNA<br>INDIETRO<center><html>");
+        backButton.setFont(backButton.getFont().deriveFont(Font.BOLD, 40f));
+        JButton clearButton = new JButton("AZZERA");
+        clearButton.setFont(clearButton.getFont().deriveFont(Font.BOLD, 50f));
         
         group4Panel.add(subMenuButton0);
         group4Panel.add(clearButton);

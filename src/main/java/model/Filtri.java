@@ -10,17 +10,7 @@ import java.util.Objects;
 
 public class Filtri {
 	
-	public static boolean matchesCriteria(Hoodie hoodie, Hoodie criteria) {
-        boolean modelloMatch = (criteria.getModello() == null) || hoodie.getModello().equals(criteria.getModello());
-        boolean tagliaMatch = (criteria.getTaglia() == null) || hoodie.getTaglia().equals(criteria.getTaglia());
-        boolean coloreMatch = (criteria.getColore() == null) || hoodie.getColore().equals(criteria.getColore());
-        
-        return modelloMatch && tagliaMatch && coloreMatch;
-    }
-
-    public static boolean equals(Hoodie hoodie1, Hoodie hoodie2) {
-        return Objects.equals(hoodie1.getId(), hoodie2.getId());
-    }
+	
 
     /*//Metodo che cerca hoodie specifica nel db
     public static ArrayList <Hoodie> filtra (Hoodie hoodie) throws SQLException{

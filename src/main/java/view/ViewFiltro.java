@@ -28,7 +28,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.*;
 
-
+import controller.ControllerViewFiltro;
 import model.*;
 
 
@@ -173,10 +173,8 @@ public class ViewFiltro extends JFrame {
             	
             	felpa = getSelectedItems();
             	
-            	
-            	System.out.print("AAAAAAAAAAA" +felpa.toString());
-            	 
-            	ArrayList <Hoodie> felpeCorrispondenti = getMatchingHoodies(felpa);
+            	ControllerViewFiltro controller = new ControllerViewFiltro();
+            	ArrayList <Hoodie> felpeCorrispondenti = controller.getMatchingHoodies(felpa);
             	if(felpeCorrispondenti.isEmpty()) {
             		JOptionPane.showMessageDialog(null, "Nessuna felpa trovata", "Ricerca senza risultati", JOptionPane.INFORMATION_MESSAGE);
                 } else {                	
@@ -286,33 +284,7 @@ public class ViewFiltro extends JFrame {
     }
 
     
-    // Metodo per ottenere le felpe corrispondenti ai criteri selezionati
-    private ArrayList<Hoodie> getMatchingHoodies(Hoodie criteria) {
-        ArrayList<Hoodie> felpeCorrispondenti = new ArrayList<>(); 
-        
-        ArrayList<Hoodie> tutteLeFelpe = new ArrayList<>();
-        String sql = "SELECT * FROM DESCRIZIONE";
-		try {
-			tutteLeFelpe = DataBase.selectFromTabel(sql);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-        
-        
-        for (Hoodie felpa : tutteLeFelpe) {
-            if (Filtri.matchesCriteria(felpa, criteria)) {
-                felpeCorrispondenti.add(felpa);
-            }
-        }
-        for(Hoodie felp : felpeCorrispondenti) {
-        	System.out.print("QQQQQQQQQ" +felp.toString());
-        }
-        return felpeCorrispondenti;
-    }
-
-
+    
 	// Metodo per azionare la selezione dei filtri
     private void toggleSelection(ArrayList<JButton> buttonGroup, JButton clickedButton) {
 		if(buttonGroup.contains(clickedButton)) {

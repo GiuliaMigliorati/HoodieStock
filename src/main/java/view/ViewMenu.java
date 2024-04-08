@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.swing.*;
 
 import controller.Controller;
+import controller.ControllerViewMenu;
 
 import java.util.ArrayList;
 import model.DataBase;
@@ -69,20 +70,11 @@ public class ViewMenu extends JFrame {
         menuButton1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ArrayList <String> codici = new ArrayList <String>(); 
-				ArrayList <Hoodie> felpeDB = new ArrayList <Hoodie>(); 
-				String sql = "SELECT * FROM DESCRIZIONE";
-				try {
-					felpeDB = DataBase.selectFromTabel(sql);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				for(Hoodie felpa : felpeDB) {
-					codici.add(felpa.getId());
-				}
+				
 				Hoodie felpa = new Hoodie();
-				felpa = getNewHoodie(codici);
+				ControllerViewMenu controller = new ControllerViewMenu();
+				felpa = controller.tastoAggiungi();
+				
 				if(felpa != null) {
 					System.out.println(felpa.toString());
 					DataBase.insertInDB(felpa);
@@ -90,31 +82,17 @@ public class ViewMenu extends JFrame {
 				} else {
 					JOptionPane.showMessageDialog(ViewMenu.this, "Operazione Annullata");
 				}				
-			}
-        	
+			}       	
         });
         
         menuButton2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ArrayList <String> codici = new ArrayList<String>() ; 
-				ArrayList <Hoodie> felpeDB = new ArrayList <Hoodie>(); 
-				String sql = "SELECT * FROM DESCRIZIONE";
-				try {
-					felpeDB = DataBase.selectFromTabel(sql);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				for(Hoodie felpa : felpeDB) {
-					codici.add(felpa.getId());
-				}
-				
 				
 				Hoodie felpa = new Hoodie();
+				ControllerViewMenu controller = new ControllerViewMenu();
+				felpa = controller.tastoElimina();
 				
-				String codice = "Inserisci il codice della tipologia di felpa da eliminare:";
-				felpa = getHoodieStocked(codice, codici);
 				if(felpa != null) {
 					System.out.println(felpa.toString());
 					try {
@@ -126,45 +104,27 @@ public class ViewMenu extends JFrame {
 					JOptionPane.showMessageDialog(ViewMenu.this, "FELPA ELIMINATA CON SUCCESSO");	
 				} else {
 					JOptionPane.showMessageDialog(ViewMenu.this, "Operazione Annullata");
-				}
-				//System.out.print(felpa.toString());
-			}
-        	
+				}				
+			}     	
         });
         
         menuButton3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
-                
-            	ArrayList <String> codici = new ArrayList<String>() ; 
-				ArrayList <Hoodie> felpeDB = new ArrayList <Hoodie>(); 
-				String sql = "SELECT * FROM DESCRIZIONE";
-				try {
-					felpeDB = DataBase.selectFromTabel(sql);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				for(Hoodie felpa : felpeDB) {
-					codici.add(felpa.getId());
-				}
-                
+                                
                 Hoodie felpa = new Hoodie();
-                
-                String codice = "Inserisci il codice della tipologia di felpa da MODIFICARE LA QUANTITà:";
-                felpa = getHoodieStocked(codice, codici);
-                
-                //System.out.print(felpa.toString());
+                ControllerViewMenu controller = new ControllerViewMenu();                
                 int count = 0;
+                felpa = controller.tastoModifica();
                 if(felpa != null) {
-					try {
-						count = Controller.conta(felpa);
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-                
+        			try {
+        				count = Controller.conta(felpa);
+        			} catch (SQLException e1) {
+        				// TODO Auto-generated catch block
+        				e1.printStackTrace();
+        			}
+                }
+                                
 	            int result = JOptionPane.showConfirmDialog(ViewMenu.this, "FELPA MODIFICABILE\nQUANTITà ATTUALE: " + count, "Conferma", JOptionPane.OK_CANCEL_OPTION);
                    
                 if (result == JOptionPane.OK_OPTION) {
@@ -186,23 +146,10 @@ public class ViewMenu extends JFrame {
                     plusButton.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            // Incrementa la quantità della felpa
-                            // Codice per aumentare la quantità della felpa di 1
-                        	ArrayList<Hoodie> felpaPlus = new ArrayList <Hoodie>();
-                        	String sql11 = "SELECT * FROM DESCRIZIONE WHERE ID = " + felpaFinale.getId();
-                        	try {
-            					felpaPlus = DataBase.selectFromTabel(sql11);
-            					if (!felpaPlus.isEmpty()) {
-            		                Hoodie firstHoodie = felpaPlus.get(0); // Prendi il primo elemento
-            		                // Inserisci il primo elemento nel database
-            		                DataBase.insertInDB(firstHoodie);
-            		                countWrapper[0] = Controller.conta(firstHoodie);
-                                    label.setText("<html>QUANTITÀ ATTUALE: " + countWrapper[0] + "<br>Scegli un'azione:</html>");
-            				}} catch (SQLException e1) {
-            					// TODO Auto-generated catch block
-            					e1.printStackTrace();
-            				}
                         	
+                        	ControllerViewMenu controller = new ControllerViewMenu();                        	
+    		                countWrapper[0] = controller.tastoModificaPlus(felpaFinale, countWrapper);
+                            label.setText("<html>QUANTITÀ ATTUALE: " + countWrapper[0] + "<br>Scegli un'azione:</html>");                        	
                         }
                     });
                     
@@ -210,34 +157,26 @@ public class ViewMenu extends JFrame {
                     minusButton.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            try {
-                                if (countWrapper[0] > 1) {
-                                    // Rimuovi la felpa dal database solo se la quantità è maggiore di 0
-                                    DataBase.removeFromDb(felpaFinale);
-                                    // Aggiorna la quantità visualizzata utilizzando la variabile finale locale
-                                    countWrapper[0] = Controller.conta(felpaFinale);
-                                    label.setText("<html>QUANTITÀ ATTUALE: " + countWrapper[0] + "<br>Scegli un'azione:</html>");
-                                } else {
+                            
+                        	ControllerViewMenu controller = new ControllerViewMenu();                        	
+    		                countWrapper[0] = controller.tastoModificaMinus(felpaFinale, countWrapper);
+    		                System.out.println("SSSSSSSS" + countWrapper[0]);
+                            if(countWrapper[0] > 1) {
+                            	label.setText("<html>QUANTITÀ ATTUALE: " + countWrapper[0] + "<br>Scegli un'azione:</html>");
+                            }
+                            else {
                                 	// Mostra un messaggio di avviso se la quantità è già 0
                                 	JOptionPane.showMessageDialog(ViewMenu.this, "La quantità è solo 1. Non è possibile diminuire ulteriormente la quantità della felpa."
                                 			+ " Si prega di usare la funzionalità ELIMINA del menu principale.", "Avviso", JOptionPane.WARNING_MESSAGE);
 
                                 	minusButton.setEnabled(false);
                                 }
-                            } catch (SQLException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
-                    
-                    });
-
-
-
-                    
+                            }                                            
+                    });                    
                     JOptionPane.showMessageDialog(null, panel, "Modifica Quantità", JOptionPane.PLAIN_MESSAGE);
                 }
             }}
-        });
+        );
 
         
         menuButton4.addActionListener(new ActionListener() {
@@ -251,125 +190,6 @@ public class ViewMenu extends JFrame {
 		
 		
 	}
-
-	protected Hoodie getHoodieStocked(String codice, ArrayList<String> codici) {
-		String userInput = null;
-		Hoodie felpa = new Hoodie();
-		do {
-	        userInput = getNonEmptyNumericInput(JOptionPane.showInputDialog(codice), codice);
-	        System.out.print("222\n");
-	        if(userInput == null) {
-	        	//JOptionPane.showMessageDialog(ViewMenu.this, "Operazione Annullata");
-	        	return null;
-	        }
-	     // Verifica se userInput è presente nell'array codici
-	        if (!containsStringIgnoreCase(codici, userInput)) {
-	            JOptionPane.showMessageDialog(null, "Il codice inserito non è valido.");
-	        }
-	        felpa.id = userInput;
-	    } while (!containsStringIgnoreCase(codici, userInput));
-		return felpa;
-	}
-	
-	
-
-	protected Hoodie getNewHoodie(ArrayList<String> codici) {
-		Hoodie felpa = new Hoodie();
-		
-		String userInput, userInput1, userInput2, userInput3;
-		String codice = "Inserisci il codice della tipologia di felpa da aggiungere:";
-		String modello = "Inserisci il modello della tipologia di felpa da aggiungere.\nMODELLI POSSIBILI: A - B - C"; 
-		String taglia = "Inserisci la taglia della tipologia di felpa da aggiungere.\nTAGLIE POSSIBILI: S - M - L";
-		String colore = "Inserisci la colore della tipologia di felpa da aggiungere.\nCOLORI POSSIBILI: ROSSO - VERDE - GIALLO";
-		
-		// Verifica l'input del codice ID
-		do {
-	        userInput = getNonEmptyNumericInput(JOptionPane.showInputDialog(codice), codice);
-	        if(userInput == null) return null;
-	        
-	        
-	        if (containsStringIgnoreCase(codici, userInput)) {
-	            JOptionPane.showMessageDialog(null, "Il codice inserito è già presente.");
-	        }
-	    } while (containsStringIgnoreCase(codici, userInput));
-		// Verifica l'input del modello
-		do {
-		    userInput1 = getNonEmptyInput(JOptionPane.showInputDialog(modello), modello);
-		    if(userInput1 == null) return null;
-		    
-		    if(!userInput1.equals("A") && !userInput1.equals("B") && !userInput1.equals("C")) {
-		        JOptionPane.showMessageDialog(null, "Il modello inserito non esiste.");
-		    }
-		} while(!userInput1.equals("A") && !userInput1.equals("B") && !userInput1.equals("C"));
-		
-		// Verifica l'input della taglia
-		do {
-			userInput2 = getNonEmptyInput(JOptionPane.showInputDialog(taglia), taglia);
-	        if(userInput2 == null) return null;
-				    
-	        if(!userInput2.equals("M") && !userInput2.equals("S") && !userInput2.equals("L")) {
-				 JOptionPane.showMessageDialog(null, "La taglia inserita non esiste.");
-				    }
-		} while(!userInput2.equals("M") && !userInput2.equals("S") && !userInput2.equals("L"));
-        
-		// Verifica l'input del colore
-		do {
-			userInput3 = getNonEmptyInput(JOptionPane.showInputDialog(colore), colore);
-	        if(userInput3 == null) return null;
-						    
-			if(!userInput3.equals("ROSSO") && !userInput3.equals("VERDE") && !userInput3.equals("GIALLO")) {
-				 JOptionPane.showMessageDialog(null, "Il colore inserito non può essere accettato.");
-						    }
-		} while(!userInput3.equals("ROSSO") && !userInput3.equals("VERDE") && !userInput3.equals("GIALLO"));
-        
-        
-		
-        felpa.id = userInput;
-        felpa.modello = userInput1;
-        felpa.taglia = userInput2;
-        felpa.colore = userInput3;
-		
-		return felpa;
-	
-	}
-
-	private String getNonEmptyInput(String message, String question) {
-	    String input = message;
-	    if(input == null) {
-	    	return null;
-	    }
-	    while (input.trim().isEmpty()) {
-	        input = JOptionPane.showInputDialog("Inserimento non valido.\n" + question);
-	     // Se l'utente ha annullato, restituisci null
-	        if (input == null) {
-	            return null;
-	        }
-	    }
-	    
-	    return input;
-	}
-	
-	private String getNonEmptyNumericInput(String message, String question) {
-	    String input = getNonEmptyInput(message, question);
-	    if(input == null) {
-	        return null;
-	    }
-	    while (!input.matches("\\d+")) {
-	        input = JOptionPane.showInputDialog("Inserimento non valido. Deve essere un numero.\n" + question);
-	        if(input == null) {
-	            return null;
-	        }
-	    }
-	    return input;
-	}
-
-	private boolean containsStringIgnoreCase(ArrayList<String> codici, String target) {
-	    for (String s : codici) {
-	        if (s.equalsIgnoreCase(target)) {
-	            return true;
-	        }
-	    }
-	    return false;
-	}
-
 }
+
+	

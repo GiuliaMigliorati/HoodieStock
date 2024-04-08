@@ -126,7 +126,6 @@ public class DataBase {
 
 		if (count>0) {
 
-			//String sql = "DELETE FROM DESCRIZIONE WHERE ID = " + hoodie.getId() + " LIMIT 1";
 			String sql1 = "DELETE FROM DESCRIZIONE WHERE ROWID = (SELECT ROWID FROM DESCRIZIONE WHERE ID = " + hoodie.getId() + " LIMIT 1)";
 			try {
 				Connection conn = DriverManager.getConnection(DB_URL);
@@ -145,7 +144,33 @@ public class DataBase {
 
 	}
 
-	
+	public static void removeAllFromDb (Hoodie hoodie) throws SQLException {
+
+		final String DB_URL = "jdbc:sqlite:sample.db";
+
+		//Prima controllo che la felpa effettivamente si trovi nel db
+		//Attenzione: metodo conta non funziona se gli passo una felpa con id null
+		int count = Controller.conta(hoodie);
+
+		if (count>0) {
+
+			String sql1 = "DELETE FROM DESCRIZIONE WHERE ID = " + hoodie.getId();
+			try {
+				Connection conn = DriverManager.getConnection(DB_URL);
+				if (conn != null) {
+					Statement stmt = conn.createStatement();
+					stmt.executeUpdate(sql1);
+					stmt.close();
+					conn.close();
+					System.out.println("Utente elminato con successo");
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+
+		}else {System.out.println("Felpa non trovata, impossibile eliminare");}
+
+	}
 
 
 

@@ -115,9 +115,19 @@ public class ViewMenu extends JFrame {
 				
 				String codice = "Inserisci il codice della tipologia di felpa da eliminare:";
 				felpa = getHoodieStocked(codice, codici);
-				
-				System.out.print(felpa.toString());
-				JOptionPane.showMessageDialog(ViewMenu.this, "FELPA ELIMINATA CON SUCCESSO");	
+				if(felpa != null) {
+					System.out.println(felpa.toString());
+					try {
+						DataBase.removeAllFromDb(felpa);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					JOptionPane.showMessageDialog(ViewMenu.this, "FELPA ELIMINATA CON SUCCESSO");	
+				} else {
+					JOptionPane.showMessageDialog(ViewMenu.this, "Operazione Annullata");
+				}
+				//System.out.print(felpa.toString());
 			}
         	
         });
@@ -145,17 +155,18 @@ public class ViewMenu extends JFrame {
                 String codice = "Inserisci il codice della tipologia di felpa da MODIFICARE LA QUANTITà:";
                 felpa = getHoodieStocked(codice, codici);
                 
-                System.out.print(felpa.toString());
+                //System.out.print(felpa.toString());
                 int count = 0;
+                if(felpa != null) {
+					try {
+						count = Controller.conta(felpa);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
                 
-				try {
-					count = Controller.conta(felpa);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-                int result = JOptionPane.showConfirmDialog(ViewMenu.this, "FELPA MODIFICABILE\nQUANTIà ATTUALE: " + count, "Conferma", JOptionPane.OK_CANCEL_OPTION);
-                
+	            int result = JOptionPane.showConfirmDialog(ViewMenu.this, "FELPA MODIFICABILE\nQUANTITà ATTUALE: " + count, "Conferma", JOptionPane.OK_CANCEL_OPTION);
+                   
                 if (result == JOptionPane.OK_OPTION) {
                     JPanel panel = new JPanel(new BorderLayout());
                     
@@ -217,6 +228,7 @@ public class ViewMenu extends JFrame {
                                 e1.printStackTrace();
                             }
                         }
+                    
                     });
 
 
@@ -224,7 +236,7 @@ public class ViewMenu extends JFrame {
                     
                     JOptionPane.showMessageDialog(null, panel, "Modifica Quantità", JOptionPane.PLAIN_MESSAGE);
                 }
-            }
+            }}
         });
 
         
@@ -247,7 +259,7 @@ public class ViewMenu extends JFrame {
 	        userInput = getNonEmptyNumericInput(JOptionPane.showInputDialog(codice), codice);
 	        System.out.print("222\n");
 	        if(userInput == null) {
-	        	JOptionPane.showMessageDialog(ViewMenu.this, "Operazione Annullata");
+	        	//JOptionPane.showMessageDialog(ViewMenu.this, "Operazione Annullata");
 	        	return null;
 	        }
 	     // Verifica se userInput è presente nell'array codici

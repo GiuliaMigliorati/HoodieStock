@@ -74,7 +74,7 @@ public class Hoodie {
 		return modelloMatch && tagliaMatch && coloreMatch;
 		
 	}
-	
+	*/
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,7 +82,8 @@ public class Hoodie {
         Hoodie hoodie = (Hoodie) o;
         return Objects.equals(id, hoodie.id);
     }
-*/
+
+	
     @Override
     public int hashCode() {
         return Objects.hash(id);

@@ -64,28 +64,33 @@ public class MainDB {
 		
 		Hoodie hoodie2 = new Hoodie ("1", "A", "L", "VERDE"); 
 		DataBase.insertInDB(hoodie2);		
-		Hoodie hoodie3 = new Hoodie ("10", "C", "M", "GIALLO"); 
+		Hoodie hoodie3 = new Hoodie ("23", "C", "M", "GIALLO"); 
 		DataBase.insertInDB(hoodie3);		
 		Hoodie hoodie4 = new Hoodie ("12", "B", "S", "VERDE"); 
 		DataBase.insertInDB(hoodie4);		
-		Hoodie hoodie5 = new Hoodie ("1", "A", "L", "VERDE"); 
+		Hoodie hoodie5 = new Hoodie ("233", "A", "L", "VERDE"); 
 		DataBase.insertInDB(hoodie5);		
-		Hoodie hoodie6 = new Hoodie ("21", "C", "L", "ROSSO"); 
+		Hoodie hoodie6 = new Hoodie ("0", "C", "L", "ROSSO"); 
 		DataBase.insertInDB(hoodie6);
-		Hoodie hoodie61 = new Hoodie ("3333", "C", "L", "ROSSO"); 
+		Hoodie hoodie61 = new Hoodie ("0", "C", "L", "ROSSO"); 
 		DataBase.insertInDB(hoodie61);
-		
+		Hoodie hoodie44 = new Hoodie ("5555", null, null, null); 
+		DataBase.insertInDB(hoodie44);
 		//Select da tabella che restituisce ArrayList di oggetti Hoodie
-		String sql4 = "SELECT * FROM DESCRIZIONE WHERE ID = 1";
+		String sql4 = "SELECT * FROM DESCRIZIONE WHERE ID = 0";
 		ArrayList <Hoodie> listaHoodie = new ArrayList<Hoodie>();
+		
+		//Stampa per prova dell'arraylist
+				for(Hoodie felpa : listaHoodie) {
+					System.out.println(felpa.toString());}
 		listaHoodie = DataBase.selectFromTabel(sql4);
 		
-		
-		/*//Stampa per prova dell'arraylist
-		for(Hoodie felpa : listaHoodie) {
-			System.out.println(felpa.toString());
+		DataBase.removeFromDb(hoodie44);
+		//Stampa per prova dell'arraylist
+		for(Hoodie felpa1 : listaHoodie) {
+			System.out.println(felpa1.toString());
 		}
-		*/
+		
 		
 	}
 

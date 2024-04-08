@@ -126,13 +126,13 @@ public class DataBase {
 
 		if (count>0) {
 
-			String sql = "DELETE TOP(1) FROM DESCRIZIONE WHERE ID =" + hoodie.getId();
-
+			//String sql = "DELETE FROM DESCRIZIONE WHERE ID = " + hoodie.getId() + " LIMIT 1";
+			String sql1 = "DELETE FROM DESCRIZIONE WHERE ROWID = (SELECT ROWID FROM DESCRIZIONE WHERE ID = " + hoodie.getId() + " LIMIT 1)";
 			try {
 				Connection conn = DriverManager.getConnection(DB_URL);
 				if (conn != null) {
 					Statement stmt = conn.createStatement();
-					stmt.executeUpdate(sql);
+					stmt.executeUpdate(sql1);
 					stmt.close();
 					conn.close();
 					System.out.println("Utente elminato con successo");

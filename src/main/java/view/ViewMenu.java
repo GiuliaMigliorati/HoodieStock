@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.*;
+
+import controller.Controller;
+
 import java.util.ArrayList;
 import model.DataBase;
 import model.Hoodie;
@@ -120,25 +123,110 @@ public class ViewMenu extends JFrame {
         });
         
         menuButton3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				//INSERIMENTO DI UN CODICE, STAMPA DELLA QUANTITà DI QUEL CODICE
-				//OPZ 1: L'UTENTE INSERISCE LA NUOVA QUANTITà E SI SOVRASCRIVE QUELLA VECCHIA
-				//OPZ 2: L'UTENTE INSERISCE DI QUANTO VUOLE MODIFICARE QUELLA QUANTITà (+ O -) CON I RELATIVI CONTROLLI
-				
-				ArrayList<String> codici = new ArrayList<>(); // SOSTITUIRE CON L'ARRAY DI CODICI DEL DB !!!!!!!!
-				
-				Hoodie felpa = new Hoodie();
-				
-				String codice = "Inserisci il codice della tipologia di felpa da MODIFICARE LA QUANTITà:";
-				felpa = getHoodieStocked(codice, codici);
-				
-				System.out.print(felpa.toString());
-				JOptionPane.showMessageDialog(ViewMenu.this, "FELPA MODIFICABILE");
-			}
-        	
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                
+            	ArrayList <String> codici = new ArrayList<String>() ; 
+				ArrayList <Hoodie> felpeDB = new ArrayList <Hoodie>(); 
+				String sql = "SELECT * FROM DESCRIZIONE";
+				try {
+					felpeDB = DataBase.selectFromTabel(sql);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				for(Hoodie felpa : felpeDB) {
+					codici.add(felpa.getId());
+				}
+                
+                Hoodie felpa = new Hoodie();
+                
+                String codice = "Inserisci il codice della tipologia di felpa da MODIFICARE LA QUANTITà:";
+                felpa = getHoodieStocked(codice, codici);
+                
+                System.out.print(felpa.toString());
+                int count = 0;
+                
+				try {
+					count = Controller.conta(felpa);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+                int result = JOptionPane.showConfirmDialog(ViewMenu.this, "FELPA MODIFICABILE\nQUANTIà ATTUALE: " + count, "Conferma", JOptionPane.OK_CANCEL_OPTION);
+                
+                if (result == JOptionPane.OK_OPTION) {
+                    JPanel panel = new JPanel(new BorderLayout());
+                    
+                    JLabel label = new JLabel("<html>QUANTITÀ ATTUALE: " + count + "<br>Scegli un'azione:</html>");
+                    panel.add(label, BorderLayout.NORTH);
+                    
+                    JPanel buttonPanel = new JPanel(); // Utilizzeremo un nuovo pannello per contenere i bottoni
+                    JButton plusButton = new JButton("+1");
+                    JButton minusButton = new JButton("-1");
+                    buttonPanel.add(plusButton);
+                    buttonPanel.add(minusButton);
+                    panel.add(buttonPanel, BorderLayout.CENTER);
+                    final Hoodie felpaFinale = felpa;
+                    final int[] countWrapper = { count };
+
+                    // Azione per il pulsante +
+                    plusButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            // Incrementa la quantità della felpa
+                            // Codice per aumentare la quantità della felpa di 1
+                        	ArrayList<Hoodie> felpaPlus = new ArrayList <Hoodie>();
+                        	String sql11 = "SELECT * FROM DESCRIZIONE WHERE ID = " + felpaFinale.getId();
+                        	try {
+            					felpaPlus = DataBase.selectFromTabel(sql11);
+            					if (!felpaPlus.isEmpty()) {
+            		                Hoodie firstHoodie = felpaPlus.get(0); // Prendi il primo elemento
+            		                // Inserisci il primo elemento nel database
+            		                DataBase.insertInDB(firstHoodie);
+            		                countWrapper[0] = Controller.conta(firstHoodie);
+                                    label.setText("<html>QUANTITÀ ATTUALE: " + countWrapper[0] + "<br>Scegli un'azione:</html>");
+            				}} catch (SQLException e1) {
+            					// TODO Auto-generated catch block
+            					e1.printStackTrace();
+            				}
+                        	
+                        }
+                    });
+                    
+                 // Azione per il pulsante -
+                    minusButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            try {
+                                if (countWrapper[0] > 1) {
+                                    // Rimuovi la felpa dal database solo se la quantità è maggiore di 0
+                                    DataBase.removeFromDb(felpaFinale);
+                                    // Aggiorna la quantità visualizzata utilizzando la variabile finale locale
+                                    countWrapper[0] = Controller.conta(felpaFinale);
+                                    label.setText("<html>QUANTITÀ ATTUALE: " + countWrapper[0] + "<br>Scegli un'azione:</html>");
+                                } else {
+                                	// Mostra un messaggio di avviso se la quantità è già 0
+                                	JOptionPane.showMessageDialog(ViewMenu.this, "La quantità è solo 1. Non è possibile diminuire ulteriormente la quantità della felpa."
+                                			+ " Si prega di usare la funzionalità ELIMINA del menu principale.", "Avviso", JOptionPane.WARNING_MESSAGE);
+
+                                	minusButton.setEnabled(false);
+                                }
+                            } catch (SQLException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    });
+
+
+
+                    
+                    JOptionPane.showMessageDialog(null, panel, "Modifica Quantità", JOptionPane.PLAIN_MESSAGE);
+                }
+            }
         });
+
         
         menuButton4.addActionListener(new ActionListener() {
 			@Override

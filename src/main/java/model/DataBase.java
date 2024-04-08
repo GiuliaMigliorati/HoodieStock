@@ -1,5 +1,7 @@
 package model;
 
+import controller.Controller;
+
 import java.io.File;
 import java.sql.Array;
 import java.sql.Connection;
@@ -114,7 +116,37 @@ public class DataBase {
 	    }
 	}
 
+	public static void removeFromDb (Hoodie hoodie) throws SQLException {
+
+		final String DB_URL = "jdbc:sqlite:sample.db";
+
+		//Prima controllo che la felpa effettivamente si trovi nel db
+		//Attenzione: metodo conta non funziona se gli passo una felpa con id null
+		int count = Controller.conta(hoodie);
+
+		if (count>0) {
+
+			String sql = "DELETE TOP(1) FROM DESCRIZIONE WHERE ID =" + hoodie.getId();
+
+			try {
+				Connection conn = DriverManager.getConnection(DB_URL);
+				if (conn != null) {
+					Statement stmt = conn.createStatement();
+					stmt.executeUpdate(sql);
+					stmt.close();
+					conn.close();
+					System.out.println("Utente elminato con successo");
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+
+		}else {System.out.println("Felpa non trovata, impossibile eliminare");}
+
+	}
+
 	
-	
+
+
 
 }

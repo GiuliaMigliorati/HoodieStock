@@ -35,9 +35,9 @@ import model.*;
 
 public class ViewFiltro extends JFrame {
 
-	private ArrayList<JButton> group1Buttons;
-    private ArrayList<JButton> group2Buttons;
-    private ArrayList<JButton> group3Buttons;
+	public ArrayList<JButton> group1Buttons;
+    public ArrayList<JButton> group2Buttons;
+    public ArrayList<JButton> group3Buttons;
     
     public void menu3() {
     	
@@ -329,15 +329,20 @@ public class ViewFiltro extends JFrame {
 	}
 	
 	// Metodo per pulire i filtri scelti
-	private void clearClickedButtons() {
+	public void clearClickedButtons() {
+		int red = 238; // Valore rosso (0-255)
+        int green = 238; // Valore verde (0-255)
+        int blue = 238; // Valore blu (0-255)
+        Color customColor = new Color(red, green, blue);
+       
 		for(JButton button : group1Buttons) {
-			button.setBackground(null);
+			button.setBackground(customColor);
 		}
 		for(JButton button : group2Buttons) {
-			button.setBackground(null);
+			button.setBackground(customColor);
 		}
 		for(JButton button : group3Buttons) {
-			button.setBackground(null);
+			button.setBackground(customColor);
 		}
 	}
 	

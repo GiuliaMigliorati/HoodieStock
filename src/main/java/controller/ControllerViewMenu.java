@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import model.DataBase;
 import model.Hoodie;
 
 public class ControllerViewMenu {
@@ -93,7 +92,7 @@ public class ControllerViewMenu {
                 Hoodie firstHoodie = felpaPlus.get(0); // Prendi il primo elemento
                 // Inserisci il primo elemento nel database
                 DataBase.insertInDB(firstHoodie);
-                countWrapper[0] = Controller.conta(firstHoodie);
+                countWrapper[0] = DataBase.conta(firstHoodie);
                 
 		}} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -109,7 +108,7 @@ public class ControllerViewMenu {
                 // Rimuovi la felpa dal database solo se la quantità è maggiore di 0
                 DataBase.removeFromDb(felpaFinale);
                 // Aggiorna la quantità visualizzata utilizzando la variabile finale locale
-                countWrapper[0] = Controller.conta(felpaFinale);             
+                countWrapper[0] = DataBase.conta(felpaFinale);             
         } catch (SQLException e1) {
             e1.printStackTrace();
         }
@@ -181,9 +180,7 @@ public class ControllerViewMenu {
 		Hoodie felpa = new Hoodie();
 		do {
 	        userInput = getNonEmptyNumericInput(JOptionPane.showInputDialog(codice), codice);
-	        System.out.print("222\n");
 	        if(userInput == null) {
-	        	//JOptionPane.showMessageDialog(ViewMenu.this, "Operazione Annullata");
 	        	return null;
 	        }
 	     // Verifica se userInput è presente nell'array codici

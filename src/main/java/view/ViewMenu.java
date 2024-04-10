@@ -7,11 +7,9 @@ import java.sql.SQLException;
 
 import javax.swing.*;
 
-import controller.Controller;
 import controller.ControllerViewMenu;
 
-import java.util.ArrayList;
-import model.DataBase;
+import controller.DataBase;
 import model.Hoodie;
 
 
@@ -65,6 +63,7 @@ public class ViewMenu extends JFrame {
 			}        	
         });
         
+        // Tasto Aggiungi
         menuButton1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -74,7 +73,6 @@ public class ViewMenu extends JFrame {
 				felpa = controller.tastoAggiungi();
 				
 				if(felpa != null) {
-					System.out.println(felpa.toString());
 					DataBase.insertInDB(felpa);
 					JOptionPane.showMessageDialog(ViewMenu.this, "FELPA INSERITA CON SUCCESSO");
 				} else {
@@ -83,6 +81,7 @@ public class ViewMenu extends JFrame {
 			}       	
         });
         
+        // Tasto Elimina
         menuButton2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -92,7 +91,6 @@ public class ViewMenu extends JFrame {
 				felpa = controller.tastoElimina();
 				
 				if(felpa != null) {
-					System.out.println(felpa.toString());
 					try {
 						DataBase.removeAllFromDb(felpa);
 					} catch (SQLException e1) {
@@ -106,6 +104,7 @@ public class ViewMenu extends JFrame {
 			}     	
         });
         
+     // Tasto Modifica
         menuButton3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -115,68 +114,67 @@ public class ViewMenu extends JFrame {
                 int count = 0;
                 felpa = controller.tastoModifica();
                 if(felpa != null) {
-        			try {
-        				count = Controller.conta(felpa);
-        			} catch (SQLException e1) {
-        				// TODO Auto-generated catch block
-        				e1.printStackTrace();
-        			}
-                }
-                                
-	            int result = JOptionPane.showConfirmDialog(ViewMenu.this, "FELPA MODIFICABILE\nQUANTITà ATTUALE: " + count, "Conferma", JOptionPane.OK_CANCEL_OPTION);
-                   
-                if (result == JOptionPane.OK_OPTION) {
-                    JPanel panel = new JPanel(new BorderLayout());
-                    
-                    JLabel label = new JLabel("<html>QUANTITÀ ATTUALE: " + count + "<br>Scegli un'azione:</html>");
-                    panel.add(label, BorderLayout.NORTH);
-                    
-                    JPanel buttonPanel = new JPanel(); // Utilizzeremo un nuovo pannello per contenere i bottoni
-                    JButton plusButton = new JButton("+1");
-                    JButton minusButton = new JButton("-1");
-                    buttonPanel.add(plusButton);
-                    buttonPanel.add(minusButton);
-                    panel.add(buttonPanel, BorderLayout.CENTER);
-                    final Hoodie felpaFinale = felpa;
-                    final int[] countWrapper = { count };
-
-                    // Azione per il pulsante +
-                    plusButton.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                        	
-                        	ControllerViewMenu controller = new ControllerViewMenu();                        	
-    		                countWrapper[0] = controller.tastoModificaPlus(felpaFinale, countWrapper);
-                            label.setText("<html>QUANTITÀ ATTUALE: " + countWrapper[0] + "<br>Scegli un'azione:</html>");                        	
-                        }
-                    });
-                    
-                 // Azione per il pulsante -
-                    minusButton.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
+                    try {
+                        count = DataBase.conta(felpa);
+                    } catch (SQLException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
                             
-                        	ControllerViewMenu controller = new ControllerViewMenu();                        	
-    		                countWrapper[0] = controller.tastoModificaMinus(felpaFinale, countWrapper);
-    		                System.out.println("SSSSSSSS" + countWrapper[0]);
-                            if(countWrapper[0] > 1) {
-                            	label.setText("<html>QUANTITÀ ATTUALE: " + countWrapper[0] + "<br>Scegli un'azione:</html>");
-                            }
-                            else {
-                                	// Mostra un messaggio di avviso se la quantità è già 0
-                                	JOptionPane.showMessageDialog(ViewMenu.this, "La quantità è solo 1. Non è possibile diminuire ulteriormente la quantità della felpa."
-                                			+ " Si prega di usare la funzionalità ELIMINA del menu principale.", "Avviso", JOptionPane.WARNING_MESSAGE);
+                    int result = JOptionPane.showConfirmDialog(ViewMenu.this, "FELPA MODIFICABILE\nQUANTITÀ ATTUALE: " + count, "Conferma", JOptionPane.OK_CANCEL_OPTION);
+                           
+                    if (result == JOptionPane.OK_OPTION) {
+                        JPanel panel = new JPanel(new BorderLayout());
+                            
+                        JLabel label = new JLabel("<html>QUANTITÀ ATTUALE: " + count + "<br>Scegli un'azione:</html>");
+                        panel.add(label, BorderLayout.NORTH);
+                            
+                        JPanel buttonPanel = new JPanel(); // Nuovo pannello per contenere i bottoni
+                        JButton plusButton = new JButton("+1");
+                        JButton minusButton = new JButton("-1");
+                        buttonPanel.add(plusButton);
+                        buttonPanel.add(minusButton);
+                        panel.add(buttonPanel, BorderLayout.CENTER);
+                        final Hoodie felpaFinale = felpa;
+                        final int[] countWrapper = { count };
 
-                                	minusButton.setEnabled(false);
+                        // Azione per il pulsante -
+                        minusButton.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                // Controlla se la quantità è già 1
+                                if (countWrapper[0] <= 1) {
+                                    // Mostra un messaggio di avviso se la quantità è già 1
+                                    JOptionPane.showMessageDialog(ViewMenu.this, "La quantità è solo 1. Non è possibile diminuire ulteriormente la quantità della felpa."
+                                            + " Si prega di usare la funzionalità ELIMINA del menu principale.", "Avviso", JOptionPane.WARNING_MESSAGE);
+                                } else {
+                                    ControllerViewMenu controller = new ControllerViewMenu();                        	
+                                    countWrapper[0] = controller.tastoModificaMinus(felpaFinale, countWrapper);
+                                    label.setText("<html>QUANTITÀ ATTUALE: " + countWrapper[0] + "<br>Scegli un'azione:</html>");
                                 }
                             }                                            
-                    });                    
-                    JOptionPane.showMessageDialog(null, panel, "Modifica Quantità", JOptionPane.PLAIN_MESSAGE);
+                        });
+                        
+                        // Azione per il pulsante +
+                        plusButton.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                ControllerViewMenu controller = new ControllerViewMenu();                        	
+                                countWrapper[0] = controller.tastoModificaPlus(felpaFinale, countWrapper);
+                                label.setText("<html>QUANTITÀ ATTUALE: " + countWrapper[0] + "<br>Scegli un'azione:</html>");                        	
+                            }
+                        });
+                            
+                        JOptionPane.showMessageDialog(null, panel, "Modifica Quantità", JOptionPane.PLAIN_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(ViewMenu.this, "Operazione Annullata");
                 }
-            }}
-        );
+            }
+        });
 
-        
+
+        // Tasto Filtra
         menuButton4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

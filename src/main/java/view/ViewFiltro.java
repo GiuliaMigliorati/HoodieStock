@@ -7,7 +7,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -167,6 +166,7 @@ public class ViewFiltro extends JFrame {
 			}        	
         });
         
+        // Tasto OK
         subMenuButton0.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -246,6 +246,7 @@ public class ViewFiltro extends JFrame {
             }			
         });
         
+        // Tasto Azzera
         clearButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -257,7 +258,6 @@ public class ViewFiltro extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JButton sourceButton = (JButton) e.getSource();
-				String selectedItems = sourceButton.getText();
 				
 				if(group1Buttons.contains(sourceButton)) {
 					toggleSelection(group1Buttons, sourceButton);

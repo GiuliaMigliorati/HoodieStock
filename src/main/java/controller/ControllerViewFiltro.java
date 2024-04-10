@@ -1,12 +1,10 @@
 package controller;
 
-import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
 
 
-import model.DataBase;
 import model.Hoodie;
 
 public class ControllerViewFiltro {
@@ -31,9 +29,7 @@ public class ControllerViewFiltro {
                 felpeCorrispondenti.add(felpa);
             }
         }
-        for(Hoodie felp : felpeCorrispondenti) {
-        	System.out.print("QQQQQQQQQ" +felp.toString());
-        }
+        
         return felpeCorrispondenti;
     }
 

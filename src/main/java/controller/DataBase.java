@@ -1,11 +1,9 @@
-package model;
+package controller;
 
-import controller.Controller;
+import model.Hoodie;
 
-import java.io.File;
-import java.sql.Array;
+
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,7 +35,7 @@ public class DataBase {
 	//Metodo per insert nel database
 	public static void insertInDB(Hoodie hoodie) {
 		final String DB_URL = "jdbc:sqlite:sample.db";
-
+		
 		String sql = "INSERT INTO DESCRIZIONE VALUES (" + " \"" + hoodie.getId() +
 				"\"," + " \"" + hoodie.getModello() + "\"," + " \"" + hoodie.getTaglia() +
 				"\"," + " \"" + hoodie.getColore() + "\")" ; 
@@ -49,7 +47,7 @@ public class DataBase {
 				stmt.executeUpdate(sql);
 				stmt.close();
 				conn.close();
-				System.out.println("Utente inserito con successo");
+				//System.out.println("Utente inserito con successo");
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -64,7 +62,7 @@ public class DataBase {
 
 		Connection conn = DriverManager.getConnection(DB_URL);
 		Statement stmt = conn.createStatement();
-		System.out.println("Risultati query:");
+		//System.out.println("Risultati query:");
 		ResultSet resultSet = stmt.executeQuery(sql);
 
 		ArrayList <String> listaHoodie = new ArrayList<String>();
@@ -73,7 +71,6 @@ public class DataBase {
 		while (resultSet.next()) {
 
 			for (int i = 1; i <= 4; i++) {
-				//System.out.println(resultSet.getString(i) + " °°°°");
 
 				listaHoodie.add(resultSet.getString(i));
 
@@ -95,18 +92,11 @@ public class DataBase {
 
 		stmt.close();
 		conn.close();
-		System.out.println("query eseguita con successo");
 
 		return hoodie;
 	}
 	
-	public static void deleteAllRows(String dbUrl, String tableName) throws SQLException {
-	    try (Connection conn = DriverManager.getConnection(dbUrl);
-	         Statement stmt = conn.createStatement()) {
-	        String sql = "DELETE FROM " + tableName;
-	        stmt.executeUpdate(sql);
-	    }
-	}
+	
 	
 	public static void dropTable(String dbUrl, String tableName) throws SQLException {
 	    try (Connection conn = DriverManager.getConnection(dbUrl);
@@ -122,7 +112,7 @@ public class DataBase {
 
 		//Prima controllo che la felpa effettivamente si trovi nel db
 		//Attenzione: metodo conta non funziona se gli passo una felpa con id null
-		int count = Controller.conta(hoodie);
+		int count = DataBase.conta(hoodie);
 
 		if (count>0) {
 
@@ -134,7 +124,6 @@ public class DataBase {
 					stmt.executeUpdate(sql1);
 					stmt.close();
 					conn.close();
-					System.out.println("Utente elminato con successo");
 				}
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
@@ -150,7 +139,7 @@ public class DataBase {
 
 		//Prima controllo che la felpa effettivamente si trovi nel db
 		//Attenzione: metodo conta non funziona se gli passo una felpa con id null
-		int count = Controller.conta(hoodie);
+		int count = DataBase.conta(hoodie);
 
 		if (count>0) {
 
@@ -162,7 +151,6 @@ public class DataBase {
 					stmt.executeUpdate(sql1);
 					stmt.close();
 					conn.close();
-					System.out.println("Utente elminato con successo");
 				}
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
@@ -172,6 +160,24 @@ public class DataBase {
 
 	}
 
+	//Metodo che restituisce quantità presente di una felpa desiderata
+    public static int conta (Hoodie hoodie) throws SQLException {
+
+        String sql = "SELECT * FROM DESCRIZIONE";
+        ArrayList <Hoodie> db = DataBase.selectFromTabel(sql);
+
+        int count = 0;
+
+        //attenzione, se entra un id null non funziona!
+        for (int i=0; i<db.size(); i++) {
+
+            if(hoodie.getId().equals(db.get(i).getId())) {
+                count++;
+            }
+        }
+
+        return count;
+    }
 
 
 }

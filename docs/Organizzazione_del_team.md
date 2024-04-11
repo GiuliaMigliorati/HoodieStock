@@ -1,0 +1,4 @@
+# ORGANIZZAZIONE DEL TEAM
+Essendo il team composto da sole due persone, la separazione dei ruoli è stata minima. Di conseguenza, per quanto riguarda il coordinamento, i componenti del gruppo hanno optato per una soluzione divisionale: ad ogni membro è stata concessa autonomia su come raggiungere gli obiettivi inizialmente concordati, a patto che venissero rispettate le tempistiche precedentemente stabile. Inoltre, la revisione dei risultati è stata eseguita regolarmente e scrupolosamente. 
+L’organizzazione del team potrebbe dunque essere interpretata come una squadra agile in cui le persone lavorano in coppia, con pilota e copilota, ma senza una gerarchia. Tratti distintivi del lavoro di gruppo del team sono stati infatti canali di comunicazioni molto brevi e una divisione dei compiti orientata alle capacità delle persone. 
+

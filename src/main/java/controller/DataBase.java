@@ -55,6 +55,26 @@ public class DataBase {
 		
 	}
 
+	public static void insertInDbPerTest (String DB_URL, Hoodie hoodie) {
+
+		String sql = "INSERT INTO DESCRIZIONE VALUES (" + " \"" + hoodie.getId() +
+				"\"," + " \"" + hoodie.getModello() + "\"," + " \"" + hoodie.getTaglia() +
+				"\"," + " \"" + hoodie.getColore() + "\")" ;
+
+		try {
+			Connection conn = DriverManager.getConnection(DB_URL);
+			if (conn != null) {
+				Statement stmt = conn.createStatement();
+				stmt.executeUpdate(sql);
+				stmt.close();
+				conn.close();
+				System.out.println("Utente inserito con successo");
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
 
 	//Metodo per query sul database 
 	public static ArrayList <Hoodie> selectFromTabel(String sql) throws SQLException {
@@ -109,6 +129,32 @@ public class DataBase {
 	public static void removeFromDb (Hoodie hoodie) throws SQLException {
 
 		final String DB_URL = "jdbc:sqlite:sample.db";
+
+		//Prima controllo che la felpa effettivamente si trovi nel db
+		//Attenzione: metodo conta non funziona se gli passo una felpa con id null
+		int count = DataBase.conta(hoodie);
+
+		if (count>0) {
+
+			String sql1 = "DELETE FROM DESCRIZIONE WHERE ROWID = (SELECT ROWID FROM DESCRIZIONE WHERE ID = " + hoodie.getId() + " LIMIT 1)";
+			try {
+				Connection conn = DriverManager.getConnection(DB_URL);
+				if (conn != null) {
+					Statement stmt = conn.createStatement();
+					stmt.executeUpdate(sql1);
+					stmt.close();
+					conn.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+
+		}else {System.out.println("Felpa non trovata, impossibile eliminare");}
+
+	}
+
+
+	public static void removeFromDbPerTest (String DB_URL, Hoodie hoodie) throws SQLException {
 
 		//Prima controllo che la felpa effettivamente si trovi nel db
 		//Attenzione: metodo conta non funziona se gli passo una felpa con id null

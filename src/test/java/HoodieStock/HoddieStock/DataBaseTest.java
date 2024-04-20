@@ -16,7 +16,7 @@ import org.junit.*;
 
 public class DataBaseTest {
 
-	/*// URL del database di test 
+	// URL del database di test 
     public static final String TEST_DB_URL =  "jdbc:sqlite:TestDB.db";
     
     
@@ -72,15 +72,15 @@ public class DataBaseTest {
     
     //TEST 2: INSERT IN DB
    
-  /*  @Test
+    @Test
     public void testInsertInDB() {
     	
     	setup(); 
     	
-        Hoodie testHoodie = new Hoodie("1", "A", "L", "ROSSO");
+        Hoodie testHoodie = new Hoodie("23", "A", "L", "ROSSO");
 
         try {
-            DataBase.insertInDbPerTest(TEST_DB_URL, testHoodie);
+            DataBase.insertInDB(testHoodie, TEST_DB_URL, "TABLETEST" );
             assertTrue(isRecordExists(testHoodie.getId()));
             
         } catch (SQLException e) {
@@ -89,24 +89,10 @@ public class DataBaseTest {
         
         
         
-       // cleanup(); //Elimino tabella dopo test 
+        cleanup(); //Elimino tabella dopo test 
     }
-*/
-    /*// Metodo di supporto per verificare se un elemento esiste nel database
-    private boolean isRecordExists(String id) throws SQLException {
-        try (Connection conn = DriverManager.getConnection(TEST_DB_URL);
-            Statement stmt = conn.createStatement()) {
-        	
-            String query = "SELECT COUNT(*) FROM TABLETEST WHERE id = '" + id + "'";
-            try (ResultSet rs = stmt.executeQuery(query)) {
-                return rs.next(); 
-            }
-        }
-    }
-    
-*/    
- /* 
-   
+
+  
     //TEST 3: REMOVE FROM DB
     
     @Test
@@ -114,12 +100,11 @@ public class DataBaseTest {
     	
     	setup(); 
     	
-        Hoodie testHoodie = new Hoodie("1", "A", "L", "ROSSO");
-        DataBase.insertInDbPerTest(TEST_DB_URL, testHoodie);
+        Hoodie testHoodie = new Hoodie("3", "A", "L", "ROSSO");
+        DataBase.insertInDB(testHoodie, TEST_DB_URL, "TABLETEST");
 
         try {
-            DataBase.removeFromDbPerTest(TEST_DB_URL, testHoodie);
-            System.out.println(testHoodie.toString());
+            DataBase.removeFromDb(testHoodie, TEST_DB_URL, "TABLETEST");
             assertFalse(isRecordExists(testHoodie.getId()));
             
             
@@ -129,7 +114,7 @@ public class DataBaseTest {
         
         cleanup(); //Elimino tabella dopo test 
     }
-    
+   
     private boolean isRecordExists(String id) throws SQLException {
         String query = "SELECT COUNT(*) FROM TABLETEST WHERE id = ?";
         try (Connection conn = DriverManager.getConnection(TEST_DB_URL);
@@ -138,7 +123,6 @@ public class DataBaseTest {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     int count = rs.getInt(1);
-                    System.out.println("EEEEEEE" + count);
                     return count > 0; // Restituisce true se il conteggio è maggiore di zero
                 } else {
                     return false; // Nessun risultato restituito dalla query
@@ -149,7 +133,7 @@ public class DataBaseTest {
 
 
     
- */
+ 
     
     
   

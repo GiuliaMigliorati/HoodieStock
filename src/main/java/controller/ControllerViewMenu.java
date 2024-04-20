@@ -8,6 +8,9 @@ import javax.swing.JOptionPane;
 import model.Hoodie;
 
 public class ControllerViewMenu {
+	final String DB_URL = "jdbc:sqlite:sample.db";
+	final String tableName = "DESCRIZIONE";
+	
 
 	public Hoodie tastoAggiungi() {
 		
@@ -15,7 +18,7 @@ public class ControllerViewMenu {
 		ArrayList <Hoodie> felpeDB = new ArrayList <Hoodie>(); 
 		String sql = "SELECT * FROM DESCRIZIONE";
 		try {
-			felpeDB = DataBase.selectFromTabel(sql);
+			felpeDB = DataBase.selectFromTabel(sql, DB_URL);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -36,7 +39,7 @@ public class ControllerViewMenu {
 		ArrayList <Hoodie> felpeDB = new ArrayList <Hoodie>(); 
 		String sql = "SELECT * FROM DESCRIZIONE";
 		try {
-			felpeDB = DataBase.selectFromTabel(sql);
+			felpeDB = DataBase.selectFromTabel(sql, DB_URL);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -63,7 +66,7 @@ public class ControllerViewMenu {
 		ArrayList <Hoodie> felpeDB = new ArrayList <Hoodie>(); 
 		String sql = "SELECT * FROM DESCRIZIONE";
 		try {
-			felpeDB = DataBase.selectFromTabel(sql);
+			felpeDB = DataBase.selectFromTabel(sql, DB_URL);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -87,12 +90,12 @@ public class ControllerViewMenu {
     	ArrayList<Hoodie> felpaPlus = new ArrayList <Hoodie>();
     	String sql11 = "SELECT * FROM DESCRIZIONE WHERE ID = " + felpaFinale.getId();
     	try {
-			felpaPlus = DataBase.selectFromTabel(sql11);
+			felpaPlus = DataBase.selectFromTabel(sql11, DB_URL);
 			if (!felpaPlus.isEmpty()) {
                 Hoodie firstHoodie = felpaPlus.get(0); // Prendi il primo elemento
                 // Inserisci il primo elemento nel database
-                DataBase.insertInDB(firstHoodie);
-                countWrapper[0] = DataBase.conta(firstHoodie);
+                DataBase.insertInDB(firstHoodie, DB_URL, tableName);
+                countWrapper[0] = DataBase.conta(firstHoodie, DB_URL, tableName);
                 
 		}} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -106,9 +109,9 @@ public class ControllerViewMenu {
 	public int tastoModificaMinus(Hoodie felpaFinale, int[] countWrapper) {		
 		try {     
                 // Rimuovi la felpa dal database solo se la quantità è maggiore di 0
-                DataBase.removeFromDb(felpaFinale);
+                DataBase.removeFromDb(felpaFinale, DB_URL, tableName);
                 // Aggiorna la quantità visualizzata utilizzando la variabile finale locale
-                countWrapper[0] = DataBase.conta(felpaFinale);             
+                countWrapper[0] = DataBase.conta(felpaFinale, DB_URL, tableName);             
         } catch (SQLException e1) {
             e1.printStackTrace();
         }

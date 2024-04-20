@@ -9,6 +9,8 @@ import model.Hoodie;
 
 public class ControllerViewFiltro {
 
+	final String DB_URL = "jdbc:sqlite:sample.db";
+
 	// Metodo per ottenere le felpe corrispondenti ai criteri selezionati
     public ArrayList<Hoodie> getMatchingHoodies(Hoodie criteria) {
         ArrayList<Hoodie> felpeCorrispondenti = new ArrayList<>(); 
@@ -16,7 +18,7 @@ public class ControllerViewFiltro {
         ArrayList<Hoodie> tutteLeFelpe = new ArrayList<>();
         String sql = "SELECT * FROM DESCRIZIONE";
 		try {
-			tutteLeFelpe = DataBase.selectFromTabel(sql);
+			tutteLeFelpe = DataBase.selectFromTabel(sql, DB_URL);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

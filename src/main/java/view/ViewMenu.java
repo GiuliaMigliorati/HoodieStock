@@ -16,6 +16,8 @@ import model.Hoodie;
 public class ViewMenu extends JFrame {
 	
 	public void menu2() {
+		final String DB_URL = "jdbc:sqlite:sample.db";
+		final String tableName = "DESCRIZIONE";
 		
 		// Imposta le proprietà del JFrame
 		setTitle("SCHERMATA DI SELEZIONE DEL MENU");
@@ -73,7 +75,7 @@ public class ViewMenu extends JFrame {
 				felpa = controller.tastoAggiungi();
 				
 				if(felpa != null) {
-					DataBase.insertInDB(felpa);
+					DataBase.insertInDB(felpa, DB_URL, tableName );
 					JOptionPane.showMessageDialog(ViewMenu.this, "FELPA INSERITA CON SUCCESSO");
 				} else {
 					JOptionPane.showMessageDialog(ViewMenu.this, "Operazione Annullata");
@@ -92,7 +94,7 @@ public class ViewMenu extends JFrame {
 				
 				if(felpa != null) {
 					try {
-						DataBase.removeAllFromDb(felpa);
+						DataBase.removeAllFromDb(felpa, DB_URL, tableName);
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -115,7 +117,7 @@ public class ViewMenu extends JFrame {
                 felpa = controller.tastoModifica();
                 if(felpa != null) {
                     try {
-                        count = DataBase.conta(felpa);
+                        count = DataBase.conta(felpa, DB_URL, tableName);
                     } catch (SQLException e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();

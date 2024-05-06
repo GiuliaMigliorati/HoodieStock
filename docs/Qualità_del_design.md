@@ -4,7 +4,7 @@ Per valutare la qualità del design, il team ha svolto alcune misurazioni del co
 
 I risultati ottenuti:
 
-![img.png](img.png)
+![img.png](img.png) 
 
 
 Analisi dei risultati:

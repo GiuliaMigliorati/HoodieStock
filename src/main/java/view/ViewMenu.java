@@ -128,7 +128,7 @@ public class ViewMenu extends JFrame {
                     if (result == JOptionPane.OK_OPTION) {
                         JPanel panel = new JPanel(new BorderLayout());
                             
-                        JLabel label = new JLabel("<html>QUANTITÀ ATTUALE: " + count + "<br>Scegli un'azione:</html>");
+                        final JLabel label = new JLabel("<html>QUANTITÀ ATTUALE: " + count + "<br>Scegli un'azione:</html>");
                         panel.add(label, BorderLayout.NORTH);
                             
                         JPanel buttonPanel = new JPanel(); // Nuovo pannello per contenere i bottoni
